@@ -1,0 +1,313 @@
+% Gemini theme
+% See: https://rev.cs.uchicago.edu/k4rtik/gemini-uccs
+% A fork of https://github.com/anishathalye/gemini
+
+\documentclass[final]{beamer}
+
+\pdfcompresslevel=0
+\pdfobjcompresslevel=0
+
+% ====================
+% Packages
+% ====================
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage[scale=1.2, size=a0, orientation=portrait]{beamerposter}
+\setlength{\paperheight}{46.8in}
+\setlength{\paperwidth}{33.1in}
+
+\usetheme{gemini}
+\usecolortheme{stanford}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+\usepackage[sort&compress,numbers]{natbib}
+\bibliographystyle{ieeetr}
+
+\usepackage{siunitx}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{anyfontsize}
+\usepackage[caption=false]{subfig}
+\usepackage{amsmath}
+\usepackage{makecell}
+
+\usetikzlibrary{arrows.meta, positioning, shapes.geometric, calc}
+
+% ====================
+% Custom colors
+% ====================
+\definecolor{stageblue}{RGB}{41,98,163}
+\definecolor{stagegreen}{RGB}{0,128,85}
+\definecolor{stageorange}{RGB}{200,120,20}
+\definecolor{stagepurple}{RGB}{100,60,150}
+\definecolor{tcr}{RGB}{180,30,30}
+\definecolor{tabheader}{RGB}{140,21,21}
+\definecolor{tabheadertext}{RGB}{255,255,255}
+\definecolor{tabrow1}{RGB}{255,245,245}
+\definecolor{tabrow2}{RGB}{255,255,255}
+
+\date{\today}
+
+% Spacing
+\setlength{\textfloatsep}{5pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{0pt}
+
+% ====================
+% Font overrides
+% ====================
+\setbeamerfont{headline title}{size=\huge,series=\bfseries}
+\setbeamerfont{headline author}{size=\large}
+\setbeamerfont{headline institute}{size=\normalsize}
+
+% % ====================
+% Lengths
+% ====================
+
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.025\paperwidth}
+\setlength{\colwidth}{0.45\paperwidth}
+
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Title
+% ====================
+
+\title{Machine Learning Enables Real-Time Waveform\\Decomposition for Dual-Readout Calorimetry}
+
+\author{Liangyu Wu \inst{1,2}, Qibin Liu \inst{1}, Marco T.\ Lucchini \inst{3,4}, Julia Gonski \inst{1}, Marcello Campajola \inst{5,6}, Stefano Moneta \inst{7}}
+
+\institute[shortinst]{\inst{1} SLAC National Accelerator Laboratory \quad \inst{2} Stanford University \quad \inst{3} Universit\`a degli Studi di Milano-Bicocca \quad \inst{4} INFN Sezione di Milano-Bicocca \quad \inst{5} Universit\`a degli Studi di Napoli Federico II \quad \inst{6} INFN Sezione di Napoli \quad \inst{7} INFN Sezione di Perugia \quad\quad \\
+\texttt{liangyu@slac.stanford.edu} \quad \href{https://arxiv.org/abs/2604.26090}{\texttt{arXiv:2604.26090}}}
+
+% ====================
+% Footer
+% ====================
+
+\footercontent{\hfill \href{https://indico.slac.stanford.edu/event/10213/overview}{The fourth US FCC Meeting 2026 --- Sep 8--11, SLAC, US} \hfill}
+
+% ====================
+% Logos (left side, stacked)
+% ====================
+
+\logoleft{%
+  \begin{minipage}[c]{16cm}
+    \centering
+    \includegraphics[width=16cm]{stanford_logos/SLAC_primary_white.png}\\[1.0cm]
+    \includegraphics[height=6.0cm]{stanford_logos/Block_S_2_color.png}
+  \end{minipage}%
+}
+
+% ====================
+% Body
+% ====================
+
+\begin{document}
+
+\begin{frame}[t]
+\begin{columns}[t]
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{block}{Introduction \& Motivation}
+
+    \begin{columns}[T]
+    \begin{column}{0.62\columnwidth}
+      The \textbf{FCC IDEA} calorimeter design~\cite{idea2025} incorporates \textbf{dual-readout crystals}~\cite{lucchini2020} with separate Cherenkov~(C) and scintillation~(S) SiPM readout~\cite{benaglia2026} for event-by-event EM fraction correction. Full waveform digitization is required to separate the overlapping C and S components, but the fine detector granularity creates prohibitive data rates at the front-end.
+    \end{column}
+    \begin{column}{0.33\columnwidth}
+      \centering
+      \vspace{0.3cm}
+      \begin{tikzpicture}[scale=1.1]
+        % Outer crystal face (square)
+        \draw[line width=2pt, draw=black!70, fill=gray!8, rounded corners=3pt] (0,0) rectangle (6,6);
+        % C-SiPM (square)
+        \draw[line width=1.5pt, draw=blue!50, fill=blue!12, rounded corners=2pt]
+          (0.4,1.3) rectangle (3.7,4.6);
+        \node[font=\large\bfseries, text=blue!60] at (2.05,3.2) {C};
+        \node[font=\scriptsize, text=blue!50] at (2.05,2.2) {+ optical filter};
+        % S-SiPM (square)
+        \draw[line width=1.5pt, draw=stagegreen!80, fill=stagegreen!15, rounded corners=2pt]
+          (4.0,1.9) rectangle (5.6,3.5);
+        \node[font=\large\bfseries, text=stagegreen] at (4.8,2.7) {S};
+      \end{tikzpicture}
+      \vspace{0.2cm}
+
+      {\small Crystal Dual-readout SiPM layout\\(Rear crystal segment)}
+    \end{column}
+    \end{columns}
+
+    \vspace{0.4cm}
+    We demonstrate that \textbf{compact neural networks deployed in the front-end electronics} can perform this decomposition in real time, achieving superior performance to template-based fitting even at \textbf{significantly reduced ADC sampling rates}.
+
+  \end{block}
+
+
+  \begin{block}{Simulation \& Signal Model}
+
+    Composite waveforms are synthesized by combining Geant4-simulated shower profiles with crystal-specific scintillation decay constants and a measured single-photon response (SPR) for SiPM pulses~\cite{alviggi2026}. Simulations cover $e^-$ and $K^0_L$ showers at 1, 5, 10, and \SI{30}{GeV}, digitized at \SI{3.125}{GHz} over a $2000$\,ns window. Realistic SiPM dark counts (\SI{10}{MHz}) and timing jitter (\SI{2.5}{ns}) are included to match expected detector conditions.
+
+    \vspace{0.4cm}
+    \begin{table}
+      \centering
+      \renewcommand{\arraystretch}{1.4}
+      \setlength{\tabcolsep}{18pt}
+      \begin{tabular}{cccc}
+        \rowcolor{tabheader}
+        \textcolor{tabheadertext}{\textbf{Crystal}} &
+        \textcolor{tabheadertext}{\textbf{Scint.\ Yield}} &
+        \textcolor{tabheadertext}{\textbf{Decay Time}} &
+        \textcolor{tabheadertext}{\textbf{Cherenkov Yield}} \\
+        \rowcolor{tabrow1}
+        BGO & 170\,phe/GeV & $\tau_1{=}50$\,ns, $\tau_2{=}320$\,ns & 50\,phe/GeV \\
+        \rowcolor{tabrow2}
+        BSO & 30\,phe/GeV  & $\tau_1{=}22$\,ns, $\tau_2{=}98$\,ns  & 50\,phe/GeV \\
+        \rowcolor{tabrow1}
+        PWO & 30\,phe/GeV  & $\tau{=}7.5$\,ns (single exp.)       & 50\,phe/GeV \\
+      \end{tabular}
+    \end{table}
+
+    \vspace{0.4cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.85\columnwidth]{figures/wf_BSO.png}
+    \end{figure}
+
+  \end{block}
+
+
+  \begin{block}{Edge-ML Design \& (e)FPGA Deployment}
+
+    \begin{columns}[T]
+    \begin{column}{0.35\columnwidth}
+      A fully-connected DNN is chosen for its fixed-latency, fully parallelizable inference --- ideal for real-time front-end deployment. The network directly regresses $(c, s, t_0)$ from pre-processed waveform inputs.
+    \end{column}
+    \begin{column}{0.60\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/DNN_pic.png}
+    \end{column}
+    \end{columns}
+
+    \vspace{0.3cm}
+    Training uses 140k waveforms per energy with a weighted MSE loss and Adam optimizer with linear warmup. A single model trained on the combined 1--\SI{30}{GeV} dataset generalizes across energies without retraining. Performance is evaluated across ADC rates from \SI{312.5}{MHz} down to \SI{10.4}{MHz}.
+
+    \vspace{0.4cm}
+    Models are compressed with magnitude pruning and quantization-aware training, then synthesized to FPGA firmware using \texttt{hls4ml}~\cite{duarte2018,hls4ml}. All configurations achieve $\leq$\SI{25}{ns} inference latency with \textbf{zero DSP} usage.
+
+\vspace{0.4cm}
+\begin{table}
+  \centering
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabular}{ccccccccc}
+    \rowcolor{tabheader}
+    \textcolor{tabheadertext}{\textbf{Crystal}} &
+    \textcolor{tabheadertext}{\textbf{Rate}} &
+    \textcolor{tabheadertext}{\textbf{Compression}} &
+    \textcolor{tabheadertext}{\textbf{Freq [MHz]}} &
+    \textcolor{tabheadertext}{\textbf{LUT}} &
+    \textcolor{tabheadertext}{\textbf{FF}} &
+    \textcolor{tabheadertext}{\textbf{DSP}} &
+    \textcolor{tabheadertext}{\textbf{ML err$_{68}$}} &
+    \textcolor{tabheadertext}{\textbf{Fit err$_{68}$}} \\
+    
+    \rowcolor{tabrow1}
+    \cellcolor{tabrow1}\raisebox{-0.2\normalbaselineskip}{BGO} & 10\,MHz  & 40\%, $\langle$10,1$\rangle$ & 57.5 & 36,879  & 213   & 0 & 5.84\% & 6.12\% \\
+    \rowcolor{tabrow1}
+    \cellcolor{tabrow1} & 312\,MHz & 30\%, $\langle$10,2$\rangle$ & 46.7 & 312,914 & 3,933 & 0 & \textbf{3.08\%} & 6.12\% \\
+      
+    \rowcolor{tabrow2}
+    \cellcolor{tabrow2}\raisebox{-0.2\normalbaselineskip}{BSO} & 10\,MHz  & 50\%, $\langle$10,2$\rangle$ & 57.7 & 30,471  & 213   & 0 & 8.14\% & 6.85\% \\
+    \rowcolor{tabrow2}
+    \cellcolor{tabrow2} & 312\,MHz & 30\%, $\langle$10,4$\rangle$ & 46.6 & 328,953 & 3,933 & 0 & \textbf{4.18\%} & 6.85\% \\
+     
+    \rowcolor{tabrow1}
+    \cellcolor{tabrow1}\raisebox{-0.2\normalbaselineskip}{PWO} & 10\,MHz  & 50\%, $\langle$10,2$\rangle$ & 57.7 & 30,321  & 213   & 0 & 11.47\% & 11.41\% \\
+    \rowcolor{tabrow1}
+    \cellcolor{tabrow1} & 312\,MHz & 30\%, $\langle$10,4$\rangle$ & 46.6 & 311,282 & 3,933 & 0 & \textbf{7.40\%} & 11.41\% \\
+  \end{tabular}
+\end{table}
+
+    \vspace{0.3cm}
+    The $\leq$\SI{25}{ns} latency at 46--\SI{58}{MHz} clock is compatible with potential future collider bunch crossing rates. The modest LUT requirement of $\mathcal{O}(30\text{k})$ can be accommodated in compact FPGAs such as embedded FPGA (eFPGA) ASICs.
+
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+ \begin{block}{Performance: ML vs.\ Template Fitting}
+
+  \begin{columns}[T]
+  \begin{column}{0.45\columnwidth}
+    ML achieves \textbf{superior C/S separation} at substantially reduced sampling rates. At \SI{312.5}{MHz} (10$\times$ reduction), the ML model outperforms template fitting for all 3 crystals at the full \SI{3.125}{GHz}.
+    
+    \vspace{0.3cm}
+    The advantage is consistent across all three crystals and the full ADC rate scan. Even at \SI{10.4}{MHz} (300$\times$ reduction), ML remains competitive with template fitting at full rate. 
+  \end{column}
+  \begin{column}{0.53\columnwidth}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/cs_ratio_error_bgo.png}
+  \end{column}
+  \end{columns}
+
+  \vspace{0.4cm}
+  A single model trained across 1--\SI{30}{GeV} generalizes robustly across all three crystals without per-energy retraining. This generalization capability is particularly valuable for applications where beam energy is not precisely known a priori.
+
+  \vspace{0.4cm}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/results_vs_rate_bgo.png}
+  \end{figure}
+
+  \vspace{0.4cm}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.95\columnwidth]{figures/err68_vs_cs_BGO.png}
+  \end{figure}
+
+The performance-resource trade-off demonstrates that ML models can maintain competitive C/S separation while dramatically \textbf{reducing hardware footprint requirements}.
+  \vspace{0.4cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.65\columnwidth]{figures/mae_cs_ratio.png}
+    \end{figure}
+
+\end{block}
+
+
+  \begin{block}{Summary \& Outlook}
+
+    Compact neural networks effectively extract Cherenkov and scintillation components from dual-readout calorimeter waveforms, achieving better C/S resolution than template fitting at lower sampling rates. A single model trained across 1--\SI{30}{GeV} generalizes robustly without per-energy retraining, and FPGA synthesis delivers $\leq$\SI{25}{ns} inference latency with zero DSP usage --- demonstrating \textbf{real-time feasibility} for FCC-ee front-end readout.
+
+    \vspace{0.4cm}
+    Future work will focus on test beam data validation and hardware characterization of eFPGA-based readout ASICs~\cite{gonski2024} to demonstrate end-to-end deployment in the IDEA detector~\cite{idea2025} readout chain.
+
+  \end{block}
+
+
+  \begin{block}{References}
+    \footnotesize{\bibliography{bibliography}}
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+
+\end{columns}
+\end{frame}
+
+\end{document}
