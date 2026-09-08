@@ -81,9 +81,6 @@
 % Helpers
 % ====================
 
-% Small caption under a figure
-\newcommand{\figcap}[1]{\vspace{0.15cm}{\small\textit{#1}}}
-
 % Sub-heading inside a block
 \newcommand{\subhead}[1]{%
   \vspace{0.4cm}{\large\bfseries\color{cardinalred}#1}\par\vspace{0.2cm}}
@@ -175,12 +172,20 @@
   % ---------- 1. New physics searches ----------
   \begin{block}{Searching for New Physics}
 
-    Our physics expertise focuses on \textbf{well-motivated BSM extensions that may
-    be undercovered at the LHC experiments} --- not because they are unlikely, but
-    because they are hard to analyse. \textbf{Complex dark sectors} and
-    \textbf{long-lived particles} are the prime examples. We respond to these
-    analysis-related challenges by developing novel ML approaches: anomaly detection,
-    transformers, foundation models, and more.
+    \begin{columns}[T]
+    \begin{column}{0.74\columnwidth}
+      Our physics expertise focuses on \textbf{well-motivated BSM extensions that
+      may be undercovered at the LHC experiments} --- not because they are unlikely,
+      but because they are hard to analyse. \textbf{Complex dark sectors} and
+      \textbf{long-lived particles} are the prime examples. We respond to these
+      analysis-related challenges by developing novel ML approaches: anomaly
+      detection, transformers, foundation models, and more.
+    \end{column}
+    \begin{column}{0.22\columnwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{figures/openhouse/atlas_logo.png}
+    \end{column}
+    \end{columns}
 
     \subhead{Dark sector mediators}
 
@@ -200,84 +205,76 @@
     \begin{column}{0.43\columnwidth}
       \centering
       \includegraphics[width=0.88\columnwidth]{figures/openhouse/dark_sector_feynman.png}
-
-      \figcap{A heavy scalar $S$ decays to a pair of dark photons $Z_d$, each of
-      which travels before decaying to an electron-positron pair.}
     \end{column}
     \end{columns}
 
     \subhead{Anomaly detection in Higgs final states}
 
-    Anomaly detection is also used to look for signs of new physics decaying into
-    \textbf{electron or photon final states with unusual topologies} --- signatures
-    that no dedicated search would have been designed to catch.
+    The Higgs boson's \textbf{universal coupling to mass} makes it a broadly
+    applicable portal to sectors beyond the Standard Model, and therefore a natural
+    anchor for anomaly detection at a collider. Our \textbf{HAXAD} (Higgs And X
+    Anomaly Detection) strategy searches for anomalies produced \emph{in association
+    with} a Higgs boson, combining ML-based \textbf{feature embedding}, data-driven
+    \textbf{background estimation}, and \textbf{weakly supervised classification}.
 
-    \placeholder{Higgs anomaly detection results to be added.}
+    \vspace{0.4cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.68\columnwidth]{strategy.pdf}
+    \end{figure}
+
+    \vspace{0.3cm}
+    Recent work brings HAXAD to the maturity needed for recorded collider data: two
+    new embedding strategies, and an inference framework giving both
+    \textbf{signal-agnostic} and signal-specific cross section limits. Over a much
+    broader range of signal models, HAXAD \textbf{matches or exceeds} the best
+    individual limits of an equivalent cut-based search.
 
   \end{block}
 
 
   % ---------- 2. Trigger anomaly detection ----------
-  % Laid out as text/figure pairs rather than full-width stacked figures, to
-  % keep the section compact without dropping any of the content.
+  % Text/figure pairs rather than full-width stacked figures, to keep the section
+  % compact without dropping any of the content.
   \begin{block}{Anomaly Detection in the ATLAS Trigger}
 
-    \begin{columns}[T]
-    \begin{column}{0.73\columnwidth}
-      The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} event rate down to a
-      rate that can be stored to disk. That makes it the gatekeeper of the final
-      dataset --- and therefore of all the physics that can be analysed offline.
+    The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} collision rate down to
+    what can be stored to disk, making it the gatekeeper of the final dataset --- and
+    of all the physics that can be analysed offline.
 
-      \vspace{0.3cm}
-      Our group is \textbf{leading the effort} to introduce real-time anomaly
-      detection algorithms into the ATLAS trigger, with the first implementation
-      entering data-taking in 2025.
-    \end{column}
-    \begin{column}{0.23\columnwidth}
-      \centering
-      \includegraphics[width=0.9\columnwidth]{figures/openhouse/atlas_logo.png}
-    \end{column}
-    \end{columns}
-
-    \vspace{0.3cm}
-    The events this trigger collects sit \emph{below existing trigger thresholds} ---
-    a phase space \textbf{never before seen} by the LHC experiments --- opening up
-    novel discovery potential for new physics.
+    \vspace{0.4cm}
+    Our group is \textbf{leading the effort} to bring real-time anomaly detection
+    into that trigger, with the first implementation entering data-taking in 2025.
+    The events it collects sit \emph{below existing trigger thresholds} --- a phase
+    space \textbf{never before seen} at the LHC.
 
     \vspace{0.4cm}
     \begin{columns}[T]
-    \begin{column}{0.40\columnwidth}
-      We use a \textbf{VAE-GAN} trained over collision events, modeled by the
-      four-vectors of their constituent particles. The network learns to reconstruct
-      ordinary events; events it reconstructs \emph{badly} are exactly the ones worth
-      saving.
+    \begin{column}{0.42\columnwidth}
+      Our \textbf{VAE-GAN} is trained on collision events described by the
+      four-vectors of their constituent particles. Events it reconstructs
+      \emph{badly} are exactly the ones worth saving.
     \end{column}
-    \begin{column}{0.56\columnwidth}
+    \begin{column}{0.54\columnwidth}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/vae_gan.png}
-
-      \figcap{Encoder, decoder and discriminator: the reconstruction error becomes
-      the anomaly score.}
     \end{column}
     \end{columns}
 
     \vspace{0.4cm}
     \begin{columns}[T]
     \begin{column}{0.42\columnwidth}
-      To run these algorithms inside the tight latency and resource budget of the
-      trigger, we employ \textbf{``fast ML''} techniques: compression (truncating
-      low-weight nodes), quantization, and reducing the number of loss terms.
+      Fitting it inside the trigger's latency and resource budget takes
+      \textbf{``fast ML''}: pruning low-weight nodes, quantization, and fewer loss
+      terms.
 
       \vspace{0.4cm}
-      \textbf{Status:} the first ATLAS anomaly trigger is collecting data, and
-      studies for Run 4 anomaly triggers are ongoing!
+      \textbf{Status:} the first ATLAS anomaly trigger is collecting data, with Run 4
+      studies ongoing!
     \end{column}
     \begin{column}{0.54\columnwidth}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/anomaly_roc.png}
-
-      \figcap{One trigger, many signals: a single model is sensitive to a wide range
-      of new physics it was never trained on.}
     \end{column}
     \end{columns}
 
@@ -318,11 +315,7 @@
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.72\columnwidth]{figures/openhouse/drift_cell_ml.png}
-
-      \figcap{Feature extraction at the edge: a whole pattern of ionization clusters
-      in a drift cell is compressed by a small network into the few numbers that the
-      rest of the experiment actually needs.}
+      \includegraphics[width=0.52\columnwidth]{figures/openhouse/drift_cell_ml.png}
     \end{figure}
 
     \vspace{0.3cm}
@@ -335,11 +328,7 @@
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.62\columnwidth]{figures/openhouse/efpga_board.png}
-
-      \figcap{An eFPGA test chip on its carrier board (right: the bare die under a
-      microscope) --- a reconfigurable ML engine small enough to live on the
-      detector.}
+      \includegraphics[width=0.44\columnwidth]{figures/openhouse/efpga_board.png}
     \end{figure}
 
     \vspace{0.3cm}
@@ -364,9 +353,6 @@
     \begin{figure}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
-
-      \figcap{From architecture to arithmetic to silicon: a transformer-like network
-      is rewritten as cheap add/shift operations, then mapped onto FPGA logic.}
     \end{figure}
 
     \subhead{Foundation models, distilled onto hardware}
@@ -386,9 +372,6 @@
     \begin{figure}
       \centering
       \includegraphics[width=0.92\columnwidth]{figures/openhouse/fpga_rack.png}
-
-      \figcap{A distilled model too large for one device is streamed across several
-      FPGAs in a single rack.}
     \end{figure}
 
     \subhead{Quantum machine learning}
