@@ -180,19 +180,27 @@
 
     \begin{columns}[T]
     \begin{column}{0.70\columnwidth}
-      \lead{Looking for anything that isn't ``normal.''}
+      \lead{Deciding what to keep, 40 million times a second.}
 
-      Machine learning-based anomaly detection in offline ATLAS searches can enable
-      broad sensitivity to \emph{any} kind of new physics that is not Standard
-      Model-like. Pushing this capability down to the \textbf{trigger level} --- the
-      ultra-low-latency system that decides which collisions to keep --- gives us the
-      potential to write out never-before-seen events from the LHC.
+      The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} event rate down to a
+      rate that can be stored to disk. That makes it the gatekeeper of the final
+      dataset --- and therefore of all the physics that can be analysed offline.
+
+      \vspace{0.3cm}
+      Our group is \textbf{leading the effort} to introduce real-time anomaly
+      detection algorithms into the ATLAS trigger, with the first implementation
+      entering data-taking in 2025.
     \end{column}
     \begin{column}{0.26\columnwidth}
       \centering
       \includegraphics[width=0.85\columnwidth]{figures/openhouse/atlas_logo.png}
     \end{column}
     \end{columns}
+
+    \vspace{0.4cm}
+    The events this trigger collects sit \emph{below existing trigger thresholds} ---
+    a phase space \textbf{never before seen} by the LHC experiments --- opening up
+    novel discovery potential for new physics.
 
     \vspace{0.4cm}
     We use a \textbf{VAE-GAN} trained over collision events, modeled by the
@@ -226,8 +234,8 @@
     \end{figure}
 
     \vspace{0.3cm}
-    \textbf{Status:} the first ATLAS anomaly trigger is on track for data-taking in
-    2025, and studies for Run 4 anomaly triggers are ongoing!
+    \textbf{Status:} the first ATLAS anomaly trigger is collecting data, and studies
+    for Run 4 anomaly triggers are ongoing!
 
   \end{block}
 
@@ -235,7 +243,12 @@
   % ---------- 2. Large-scale ML ----------
   \begin{block}{Large-Scale ML for Particle Physics}
 
-    \lead{Foundation models and contrastive learning for collider data.}
+    \lead{Learning the language of collision events.}
+
+    Beyond single-purpose classifiers, we develop \textbf{transformers} and
+    \textbf{foundation models} for analysis design: large models trained once on
+    collision data, then adapted to many different searches rather than rebuilt for
+    each one.
 
     \subhead{Foundation models for HEP}
     \placeholder{Content to be added.}
@@ -248,6 +261,15 @@
 
   % ---------- 3. New physics searches ----------
   \begin{block}{Searching for New Physics}
+
+    \lead{Covering the blind spots.}
+
+    Our physics expertise focuses on \textbf{well-motivated BSM extensions that may
+    be undercovered at the LHC experiments} --- not because they are unlikely, but
+    because they are hard to analyse. \textbf{Complex dark sectors} and
+    \textbf{long-lived particles} are the prime examples. We respond to these
+    analysis-related challenges by developing novel ML approaches: anomaly detection,
+    transformers, foundation models, and more.
 
     \subhead{Dark sector mediators}
 
@@ -292,10 +314,11 @@
 
     \lead{Put the intelligence where the data is born.}
 
-    Machine learning at the detector \textbf{``edge''} --- the source of the data ---
-    can reduce the off-detector data rate and enable a far more efficient trigger and
-    data acquisition system. Rather than shipping every raw sample off the detector,
-    a smart front-end sends only what matters.
+    At-source (\textbf{``edge''}) deployment of AI/ML can address the challenges of
+    future ultra-high data rate experiments --- but it demands novel solutions in
+    microelectronics that deliver \textbf{reconfigurable digital logic} within
+    stringent latency and power constraints. Rather than shipping every raw sample
+    off the detector, a smart front-end sends only what matters.
 
     \vspace{0.4cm}
     \begin{figure}
@@ -308,16 +331,11 @@
     \end{figure}
 
     \vspace{0.3cm}
-    In collaboration with SLAC's \textbf{Technology Innovation Directorate (TID)}, we
-    are exploring \textbf{eFPGAs} for ML-based signal processing, leveraging
-    innovative data compression algorithms in advanced tracker and calorimeter
-    concepts.
-
-    \vspace{0.4cm}
-    For example, detectors at next-generation colliders such as CERN's
-    \textbf{Future Circular Collider} are looking at \textbf{drift chamber
-    trackers}; we develop small compression models that perform key feature
-    extraction for deployment directly in the front-end readout.
+    We are developing \textbf{embedded FPGA (eFPGA)} technology, capable of deploying
+    reconfigurable logic blocks directly onto \textbf{ASICs}. This combines the
+    benefits of an FPGA with the flexibility and processing power required for
+    on-detector implementation --- so the algorithm can be updated long after the
+    chip is built.
 
     \vspace{0.4cm}
     \begin{figure}
@@ -330,10 +348,12 @@
     \end{figure}
 
     \vspace{0.3cm}
-    \textbf{Embedded field programmable gate arrays (eFPGAs)} allow the design of an
-    ASIC that is usable at the detector front-end while still carrying a
-    \textbf{reconfigurable} digital logic fabric --- so the algorithm can be updated
-    long after the chip is built.
+    In collaboration with engineers in SLAC's \textbf{Technology Innovation
+    Directorate (TID)}, we explore eFPGA applications in advanced subsystems for
+    future experiments such as \textbf{FCC-ee} --- including \textbf{drift chambers}
+    and \textbf{dual-readout calorimeters} --- as well as for applications beyond
+    particle physics, such as \textbf{photon science} and \textbf{quantum information
+    science}.
 
   \end{block}
 
@@ -380,11 +400,18 @@
   % ---------- Team ----------
   \begin{block}{Who We Are}
 
-    We are an experimental particle physics group at \textbf{SLAC National
-    Accelerator Laboratory}, working across the \textbf{Fundamental Physics} and
-    \textbf{Technology Innovation} Directorates and with \textbf{Stanford
-    University}. Our work spans the full chain: from asking what new physics might
-    look like, to training the network, to taping out the chip that runs it.
+    Our group pursues the application of the latest AI/ML techniques to the
+    challenges of \textbf{data-taking} and \textbf{physics analysis} for the
+    \textbf{ATLAS} experiment at the Large Hadron Collider, hosted at the
+    \textbf{CERN} laboratory in Geneva, Switzerland. We are also involved in R\&D
+    studies and \textbf{strategic planning for next-generation future colliders},
+    such as the proposed \textbf{Future Circular Collider} at CERN.
+
+    \vspace{0.4cm}
+    We sit across SLAC's \textbf{Fundamental Physics} and \textbf{Technology
+    Innovation} Directorates and work with \textbf{Stanford University}, spanning the
+    full chain: from asking what new physics might look like, to training the network,
+    to taping out the chip that runs it.
 
     \vspace{0.4cm}
     \textbf{Interested?} We host students at every level, and there is room for
