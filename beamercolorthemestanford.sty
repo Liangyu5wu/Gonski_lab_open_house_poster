@@ -41,16 +41,26 @@
 
 % Headline, Sidebar, Footer
 \setbeamercolor*{sidebar}{use=structure,bg= beige}
-% \setbeamercolor{headline}{bg=paloaltogreen,fg=white}
-% \setbeamercolor{headline}{bg=white,fg=cardinalred}
-\setbeamercolor{headline}{bg=cardinalred,fg=white}
-% \setbeamercolor{headline}{bg=coolgray,fg=white}
-\setbeamercolor*{footer}{use=structure,bg= footergray,fg=darkcardinal}
+% -- Light (open house) variant: white header/footer bands with black type.
+%    Swap the line below for {bg=cardinalred,fg=white} to get the classic
+%    cardinal banner back.
+\setbeamercolor{headline}{bg=white,fg=black}
+\setbeamercolor{headline title}{fg=black}
+\setbeamercolor{headline author}{fg=black}
+\setbeamercolor{headline institute}{fg=coolgray}
+% Thin cardinal rule keeps the white bands visually separated from the body
+\setbeamercolor{headline rule}{bg=cardinalred}
+\setbeamercolor*{footer}{use=structure,bg=white,fg=black}
 
 % Block
 \setbeamercolor{block title}{fg=cardinalred,bg=white}
-\setbeamercolor{block separator}{bg=black}
+\setbeamercolor{block separator}{bg=cardinalred}
 \setbeamercolor{block body}{fg=black,bg=white}
+
+% Alerted block -- used for the open house call-out boxes
+\setbeamercolor{block alerted title}{fg=white,bg=cardinalred}
+\setbeamercolor{block alerted separator}{bg=cardinalred}
+\setbeamercolor{block alerted body}{fg=black,bg=boxgray}
   
 
 \setbeamercolor*{palette sidebar primary}{use=structure,fg=structure.fg!10}

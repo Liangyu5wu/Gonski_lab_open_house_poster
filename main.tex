@@ -1,5 +1,5 @@
-% Gemini theme
-% See: https://rev.cs.uchicago.edu/k4rtik/gemini-uccs
+% Gonski Lab -- SLAC Open House poster
+% Built on the Gemini theme: https://rev.cs.uchicago.edu/k4rtik/gemini-uccs
 % A fork of https://github.com/anishathalye/gemini
 
 \documentclass[final]{beamer}
@@ -25,9 +25,6 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.17}
-
-\usepackage[sort&compress,numbers]{natbib}
-\bibliographystyle{ieeetr}
 
 \usepackage{siunitx}
 \usepackage{enumitem}
@@ -80,21 +77,35 @@
 \newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
 
 % ====================
+% Helpers
+% ====================
+
+% Short lead-in sentence for a block, set slightly larger than body text
+\newcommand{\lead}[1]{{\large\textbf{#1}}\par\vspace{0.2cm}}
+
+% Small caption under a figure
+\newcommand{\figcap}[1]{\vspace{0.15cm}{\small\textit{#1}}}
+
+% ====================
 % Title
 % ====================
 
-\title{Machine Learning Enables Real-Time Waveform\\Decomposition for Dual-Readout Calorimetry}
+\title{Machine Learning \& Microelectronics for\\New Physics Searches at Colliders}
 
-\author{Liangyu Wu \inst{1,2}, Qibin Liu \inst{1}, Marco T.\ Lucchini \inst{3,4}, Julia Gonski \inst{1}, Marcello Campajola \inst{5,6}, Stefano Moneta \inst{7}}
+\author{\textbf{PI:} Julia Gonski \quad\textbf{Postdocs:} Sagar Addepalli, Qibin Liu \quad\textbf{PhD:} Kenny Jia, Liangyu Wu \quad\textbf{Undergrads:} Gia Ancone, Deniz Yilmaz, Alexander Yue}
 
-\institute[shortinst]{\inst{1} SLAC National Accelerator Laboratory \quad \inst{2} Stanford University \quad \inst{3} Universit\`a degli Studi di Milano-Bicocca \quad \inst{4} INFN Sezione di Milano-Bicocca \quad \inst{5} Universit\`a degli Studi di Napoli Federico II \quad \inst{6} INFN Sezione di Napoli \quad \inst{7} INFN Sezione di Perugia \quad\quad \\
-\texttt{liangyu@slac.stanford.edu} \quad \href{https://arxiv.org/abs/2604.26090}{\texttt{arXiv:2604.26090}}}
+\institute[shortinst]{Fundamental Physics Directorate \quad$\bullet$\quad SLAC National Accelerator Laboratory \quad$\bullet$\quad Stanford University}
 
 % ====================
 % Footer
 % ====================
 
-\footercontent{\hfill \href{https://indico.slac.stanford.edu/event/10213/overview}{The fourth US FCC Meeting 2026 --- Sep 8--11, SLAC, US} \hfill}
+\footercontent{%
+  \hfill
+  \raisebox{-0.35\height}{\includegraphics[height=3.2cm]{stanford_logos/doe_stanford_seal.png}}%
+  \hspace{2cm}
+  \textbf{SLAC Open House} --- stop by, ask us anything, and see the chips and boards up close!
+  \hfill}
 
 % ====================
 % Logos (left side, stacked)
@@ -103,7 +114,7 @@
 \logoleft{%
   \begin{minipage}[c]{16cm}
     \centering
-    \includegraphics[width=16cm]{stanford_logos/SLAC_primary_white.png}\\[1.0cm]
+    \includegraphics[width=16cm]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
     \includegraphics[height=6.0cm]{stanford_logos/Block_S_2_color.png}
   \end{minipage}%
 }
@@ -120,126 +131,121 @@
 
 \begin{column}{\colwidth}
 
-  \begin{block}{Introduction \& Motivation}
+  \begin{block}{What Are We Looking For?}
 
     \begin{columns}[T]
-    \begin{column}{0.62\columnwidth}
-      The \textbf{FCC IDEA} calorimeter design~\cite{idea2025} incorporates \textbf{dual-readout crystals}~\cite{lucchini2020} with separate Cherenkov~(C) and scintillation~(S) SiPM readout~\cite{benaglia2026} for event-by-event EM fraction correction. Full waveform digitization is required to separate the overlapping C and S components, but the fine detector granularity creates prohibitive data rates at the front-end.
-    \end{column}
-    \begin{column}{0.33\columnwidth}
-      \centering
-      \vspace{0.3cm}
-      \begin{tikzpicture}[scale=1.1]
-        % Outer crystal face (square)
-        \draw[line width=2pt, draw=black!70, fill=gray!8, rounded corners=3pt] (0,0) rectangle (6,6);
-        % C-SiPM (square)
-        \draw[line width=1.5pt, draw=blue!50, fill=blue!12, rounded corners=2pt]
-          (0.4,1.3) rectangle (3.7,4.6);
-        \node[font=\large\bfseries, text=blue!60] at (2.05,3.2) {C};
-        \node[font=\scriptsize, text=blue!50] at (2.05,2.2) {+ optical filter};
-        % S-SiPM (square)
-        \draw[line width=1.5pt, draw=stagegreen!80, fill=stagegreen!15, rounded corners=2pt]
-          (4.0,1.9) rectangle (5.6,3.5);
-        \node[font=\large\bfseries, text=stagegreen] at (4.8,2.7) {S};
-      \end{tikzpicture}
-      \vspace{0.2cm}
+    \begin{column}{0.60\columnwidth}
+      The \textbf{Standard Model} of particle physics describes every particle we
+      have ever discovered --- and yet we know it is incomplete. It says nothing
+      about dark matter, and cannot explain why the universe contains matter at
+      all. Something \emph{new} must be out there.
 
-      {\small Crystal Dual-readout SiPM layout\\(Rear crystal segment)}
+      \vspace{0.4cm}
+      At CERN's \textbf{Large Hadron Collider}, the \textbf{ATLAS} experiment
+      smashes protons together 40 million times per second, hoping to make that
+      new physics in the lab. The catch: we can only afford to record a tiny
+      fraction of those collisions, and the decision about what to keep has to be
+      made in \emph{microseconds}.
+
+      \vspace{0.4cm}
+      Our group attacks that problem from both ends --- the
+      \textbf{algorithms} that decide what is interesting, and the
+      \textbf{microelectronics} that run them right next to the detector.
+    \end{column}
+    \begin{column}{0.36\columnwidth}
+      \centering
+      \includegraphics[width=0.72\columnwidth]{figures/openhouse/atlas_logo.png}
+
+      \figcap{The ATLAS experiment at CERN}
     \end{column}
     \end{columns}
-
-    \vspace{0.4cm}
-    We demonstrate that \textbf{compact neural networks deployed in the front-end electronics} can perform this decomposition in real time, achieving superior performance to template-based fitting even at \textbf{significantly reduced ADC sampling rates}.
 
   \end{block}
 
 
-  \begin{block}{Simulation \& Signal Model}
+  \begin{alertblock}{Our Big Idea}
 
-    Composite waveforms are synthesized by combining Geant4-simulated shower profiles with crystal-specific scintillation decay constants and a measured single-photon response (SPR) for SiPM pulses~\cite{alviggi2026}. Simulations cover $e^-$ and $K^0_L$ showers at 1, 5, 10, and \SI{30}{GeV}, digitized at \SI{3.125}{GHz} over a $2000$\,ns window. Realistic SiPM dark counts (\SI{10}{MHz}) and timing jitter (\SI{2.5}{ns}) are included to match expected detector conditions.
+    Instead of telling the detector \emph{exactly} what to look for, we teach it
+    what ordinary collisions look like --- and then ask it to flag anything
+    \textbf{surprising}. Doing this in real time, in a chip, means we can catch new
+    physics we never thought to search for.
 
-    \vspace{0.4cm}
-    \begin{table}
-      \centering
-      \renewcommand{\arraystretch}{1.4}
-      \setlength{\tabcolsep}{18pt}
-      \begin{tabular}{cccc}
-        \rowcolor{tabheader}
-        \textcolor{tabheadertext}{\textbf{Crystal}} &
-        \textcolor{tabheadertext}{\textbf{Scint.\ Yield}} &
-        \textcolor{tabheadertext}{\textbf{Decay Time}} &
-        \textcolor{tabheadertext}{\textbf{Cherenkov Yield}} \\
-        \rowcolor{tabrow1}
-        BGO & 170\,phe/GeV & $\tau_1{=}50$\,ns, $\tau_2{=}320$\,ns & 50\,phe/GeV \\
-        \rowcolor{tabrow2}
-        BSO & 30\,phe/GeV  & $\tau_1{=}22$\,ns, $\tau_2{=}98$\,ns  & 50\,phe/GeV \\
-        \rowcolor{tabrow1}
-        PWO & 30\,phe/GeV  & $\tau{=}7.5$\,ns (single exp.)       & 50\,phe/GeV \\
-      \end{tabular}
-    \end{table}
+  \end{alertblock}
+
+
+  \begin{block}{Anomaly Detection in the ATLAS Trigger}
+
+    \lead{Looking for anything that isn't ``normal.''}
+
+    Machine learning-based anomaly detection in offline ATLAS searches can enable
+    broad sensitivity to \emph{any} kind of new physics that is not Standard
+    Model-like. Pushing this capability down to the \textbf{trigger level} --- the
+    ultra-low-latency system that decides which collisions to keep --- gives us the
+    potential to write out never-before-seen events from the LHC.
 
     \vspace{0.4cm}
+    We use a \textbf{VAE-GAN} trained over collision events, modeled by the
+    four-vectors of their constituent particles. The network learns to reconstruct
+    ordinary events; events it reconstructs \emph{badly} are exactly the ones worth
+    saving.
+
+    \vspace{0.5cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.85\columnwidth]{figures/wf_BSO.png}
+      \includegraphics[width=0.98\columnwidth]{figures/openhouse/vae_gan.png}
+
+      \figcap{The VAE-GAN: an encoder compresses each event, a decoder rebuilds it,
+      and a discriminator sharpens the result. Reconstruction error becomes the
+      anomaly score.}
     \end{figure}
+
+    \vspace{0.5cm}
+    To run these algorithms inside the tight latency and resource budget of the
+    ATLAS trigger, we employ \textbf{``fast ML''} techniques: compression
+    (truncating low-weight nodes), quantization, and reducing the number of loss
+    terms.
+
+    \vspace{0.5cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.88\columnwidth]{figures/openhouse/anomaly_roc.png}
+
+      \figcap{One trigger, many signals: a single anomaly detection model is
+      sensitive to a wide range of new physics models it was never trained on.}
+    \end{figure}
+
+    \vspace{0.4cm}
+    \textbf{Status:} the first ATLAS anomaly trigger is on track for data-taking in
+    2025, and studies for Run 4 anomaly triggers are ongoing!
 
   \end{block}
 
 
-  \begin{block}{Edge-ML Design \& (e)FPGA Deployment}
+  \begin{block}{Searching for Dark Sector Mediators}
 
-    \begin{columns}[T]
-    \begin{column}{0.35\columnwidth}
-      A fully-connected DNN is chosen for its fixed-latency, fully parallelizable inference --- ideal for real-time front-end deployment. The network directly regresses $(c, s, t_0)$ from pre-processed waveform inputs.
-    \end{column}
-    \begin{column}{0.60\columnwidth}
+    \lead{Hunting particles that decay far from where they were born.}
+
+    Potential \textbf{dark matter} candidates can be produced in the decays of heavy
+    scalar particles. These dark matter particles can be \textbf{long-lived}, and
+    decay far away from the primary proton collision point --- leaving behind
+    \textbf{displaced decay vertices} rather than tracks that all point back to one
+    spot.
+
+    \vspace{0.5cm}
+    \begin{figure}
       \centering
-      \includegraphics[width=\columnwidth]{figures/DNN_pic.png}
-    \end{column}
-    \end{columns}
+      \includegraphics[width=0.78\columnwidth]{figures/openhouse/dark_sector_feynman.png}
 
-    \vspace{0.3cm}
-    Training uses 140k waveforms per energy with a weighted MSE loss and Adam optimizer with linear warmup. A single model trained on the combined 1--\SI{30}{GeV} dataset generalizes across energies without retraining. Performance is evaluated across ADC rates from \SI{312.5}{MHz} down to \SI{10.4}{MHz}.
+      \figcap{A heavy scalar $S$ decays to a pair of dark photons $Z_d$, each of
+      which travels before decaying to an electron-positron pair.}
+    \end{figure}
 
     \vspace{0.4cm}
-    Models are compressed with magnitude pruning and quantization-aware training, then synthesized to FPGA firmware using \texttt{hls4ml}~\cite{duarte2018,hls4ml}. All configurations achieve $\leq$\SI{25}{ns} inference latency with \textbf{zero DSP} usage.
-
-\vspace{0.4cm}
-\begin{table}
-  \centering
-  \renewcommand{\arraystretch}{1.35}
-  \begin{tabular}{ccccccccc}
-    \rowcolor{tabheader}
-    \textcolor{tabheadertext}{\textbf{Crystal}} &
-    \textcolor{tabheadertext}{\textbf{Rate}} &
-    \textcolor{tabheadertext}{\textbf{Compression}} &
-    \textcolor{tabheadertext}{\textbf{Freq [MHz]}} &
-    \textcolor{tabheadertext}{\textbf{LUT}} &
-    \textcolor{tabheadertext}{\textbf{FF}} &
-    \textcolor{tabheadertext}{\textbf{DSP}} &
-    \textcolor{tabheadertext}{\textbf{ML err$_{68}$}} &
-    \textcolor{tabheadertext}{\textbf{Fit err$_{68}$}} \\
-    
-    \rowcolor{tabrow1}
-    \cellcolor{tabrow1}\raisebox{-0.2\normalbaselineskip}{BGO} & 10\,MHz  & 40\%, $\langle$10,1$\rangle$ & 57.5 & 36,879  & 213   & 0 & 5.84\% & 6.12\% \\
-    \rowcolor{tabrow1}
-    \cellcolor{tabrow1} & 312\,MHz & 30\%, $\langle$10,2$\rangle$ & 46.7 & 312,914 & 3,933 & 0 & \textbf{3.08\%} & 6.12\% \\
-      
-    \rowcolor{tabrow2}
-    \cellcolor{tabrow2}\raisebox{-0.2\normalbaselineskip}{BSO} & 10\,MHz  & 50\%, $\langle$10,2$\rangle$ & 57.7 & 30,471  & 213   & 0 & 8.14\% & 6.85\% \\
-    \rowcolor{tabrow2}
-    \cellcolor{tabrow2} & 312\,MHz & 30\%, $\langle$10,4$\rangle$ & 46.6 & 328,953 & 3,933 & 0 & \textbf{4.18\%} & 6.85\% \\
-     
-    \rowcolor{tabrow1}
-    \cellcolor{tabrow1}\raisebox{-0.2\normalbaselineskip}{PWO} & 10\,MHz  & 50\%, $\langle$10,2$\rangle$ & 57.7 & 30,321  & 213   & 0 & 11.47\% & 11.41\% \\
-    \rowcolor{tabrow1}
-    \cellcolor{tabrow1} & 312\,MHz & 30\%, $\langle$10,4$\rangle$ & 46.6 & 311,282 & 3,933 & 0 & \textbf{7.40\%} & 11.41\% \\
-  \end{tabular}
-\end{table}
-
-    \vspace{0.3cm}
-    The $\leq$\SI{25}{ns} latency at 46--\SI{58}{MHz} clock is compatible with potential future collider bunch crossing rates. The modest LUT requirement of $\mathcal{O}(30\text{k})$ can be accommodated in compact FPGAs such as embedded FPGA (eFPGA) ASICs.
+    Using new reconstruction techniques, we can identify these displaced vertices in
+    the ATLAS \textbf{inner tracker} and in the \textbf{calorimeter}, decaying to
+    pairs of electrons. Anomaly detection is also used here, to look for signs of
+    new physics decaying into electron or photon final states with unusual
+    topologies.
 
   \end{block}
 
@@ -249,58 +255,128 @@
 
 \begin{column}{\colwidth}
 
- \begin{block}{Performance: ML vs.\ Template Fitting}
+  \begin{block}{Edge ML \& Smart Detectors}
 
-  \begin{columns}[T]
-  \begin{column}{0.45\columnwidth}
-    ML achieves \textbf{superior C/S separation} at substantially reduced sampling rates. At \SI{312.5}{MHz} (10$\times$ reduction), the ML model outperforms template fitting for all 3 crystals at the full \SI{3.125}{GHz}.
-    
-    \vspace{0.3cm}
-    The advantage is consistent across all three crystals and the full ADC rate scan. Even at \SI{10.4}{MHz} (300$\times$ reduction), ML remains competitive with template fitting at full rate. 
-  \end{column}
-  \begin{column}{0.53\columnwidth}
-    \centering
-    \includegraphics[width=\columnwidth]{figures/cs_ratio_error_bgo.png}
-  \end{column}
-  \end{columns}
+    \lead{Put the intelligence where the data is born.}
 
-  \vspace{0.4cm}
-  A single model trained across 1--\SI{30}{GeV} generalizes robustly across all three crystals without per-energy retraining. This generalization capability is particularly valuable for applications where beam energy is not precisely known a priori.
+    Machine learning at the detector \textbf{``edge''} --- the source of the data ---
+    can reduce the off-detector data rate and enable a far more efficient trigger and
+    data acquisition system. Rather than shipping every raw sample off the detector,
+    a smart front-end sends only what matters.
 
-  \vspace{0.4cm}
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.95\columnwidth]{figures/results_vs_rate_bgo.png}
-  \end{figure}
-
-  \vspace{0.4cm}
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.95\columnwidth]{figures/err68_vs_cs_BGO.png}
-  \end{figure}
-
-The performance-resource trade-off demonstrates that ML models can maintain competitive C/S separation while dramatically \textbf{reducing hardware footprint requirements}.
-  \vspace{0.4cm}
+    \vspace{0.5cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.65\columnwidth]{figures/mae_cs_ratio.png}
+      \includegraphics[width=0.85\columnwidth]{figures/openhouse/drift_cell_ml.png}
+
+      \figcap{Feature extraction at the edge: a whole pattern of ionization clusters
+      in a drift cell is compressed by a small network into the few numbers that the
+      rest of the experiment actually needs.}
     \end{figure}
 
-\end{block}
-
-
-  \begin{block}{Summary \& Outlook}
-
-    Compact neural networks effectively extract Cherenkov and scintillation components from dual-readout calorimeter waveforms, achieving better C/S resolution than template fitting at lower sampling rates. A single model trained across 1--\SI{30}{GeV} generalizes robustly without per-energy retraining, and FPGA synthesis delivers $\leq$\SI{25}{ns} inference latency with zero DSP usage --- demonstrating \textbf{real-time feasibility} for FCC-ee front-end readout.
+    \vspace{0.4cm}
+    In collaboration with SLAC's \textbf{Technology Innovation Directorate (TID)}, we
+    are exploring \textbf{eFPGAs} for ML-based signal processing, leveraging
+    innovative data compression algorithms in advanced tracker and calorimeter
+    concepts.
 
     \vspace{0.4cm}
-    Future work will focus on test beam data validation and hardware characterization of eFPGA-based readout ASICs~\cite{gonski2024} to demonstrate end-to-end deployment in the IDEA detector~\cite{idea2025} readout chain.
+    For example, detectors at next-generation colliders such as CERN's
+    \textbf{Future Circular Collider} are looking at \textbf{drift chamber
+    trackers}; we develop small compression models that perform key feature
+    extraction for deployment directly in the front-end readout.
+
+    \vspace{0.5cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.85\columnwidth]{figures/openhouse/efpga_board.png}
+
+      \figcap{An eFPGA test chip on its carrier board (right: the bare die under a
+      microscope) --- a reconfigurable ML engine small enough to live on the
+      detector.}
+    \end{figure}
+
+    \vspace{0.4cm}
+    \textbf{Embedded field programmable gate arrays (eFPGAs)} allow the design of an
+    ASIC that is usable at the detector front-end while still carrying a
+    \textbf{reconfigurable} digital logic fabric --- so the algorithm can be updated
+    long after the chip is built.
 
   \end{block}
 
 
-  \begin{block}{References}
-    \footnotesize{\bibliography{bibliography}}
+  \begin{block}{Advancing ML on FPGAs \& MLP-Mixers}
+
+    \lead{Making state-of-the-art architectures fit in real hardware.}
+
+    Also with TID, we develop novel methods to implement machine learning on
+    \textbf{FPGAs}, targeting \textbf{ultra-fast inference} and \textbf{low power}
+    for applications like online data acquisition and processing.
+
+    \vspace{0.5cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
+
+      \figcap{From architecture to arithmetic to silicon: the MLP-Mixer is rewritten
+      as cheap add/shift operations, then mapped onto FPGA logic.}
+    \end{figure}
+
+    \vspace{0.4cm}
+    The \textbf{MLP-Mixer} architecture --- promising for resource-limited,
+    transformer-like learning --- has been successfully implemented. This enables
+    edge and real-time ML to \textbf{scale up} and take advantage of state-of-the-art
+    ML techniques, rather than being stuck with only the smallest networks.
+
+    \vspace{0.5cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/fpga_rack.png}
+
+      \figcap{Larger models are split across multiple FPGAs in a single server rack,
+      linked by high-speed streaming interfaces.}
+    \end{figure}
+
+  \end{block}
+
+
+  \begin{block}{Why It Matters}
+
+    \begin{itemize}
+      \item \textbf{Discovery reach.} A trigger that recognizes ``weird'' instead of
+      one specific signature keeps our options open for physics nobody has predicted.
+      \item \textbf{Data volume.} Smart front-ends cut the data rate at the source,
+      which is what makes the next generation of ultra-granular detectors affordable
+      at all.
+      \item \textbf{Beyond physics.} The same recipe --- tiny, quantized networks on
+      radiation-tolerant reconfigurable chips with nanosecond latency --- shows up in
+      medical imaging, accelerator controls, photon science, and autonomous systems.
+    \end{itemize}
+
+  \end{block}
+
+
+  \begin{block}{Who We Are}
+
+    We are an experimental particle physics group at \textbf{SLAC National
+    Accelerator Laboratory}, working across the \textbf{Fundamental Physics} and
+    \textbf{Technology Innovation} Directorates and with \textbf{Stanford
+    University}. Our work spans the full chain: from asking what new physics might
+    look like, to training the network, to taping out the chip that runs it.
+
+    \vspace{0.4cm}
+    \begin{itemize}
+      \item \textbf{PI:} Julia Gonski
+      \item \textbf{Postdocs:} Sagar Addepalli, Qibin Liu
+      \item \textbf{Graduate students:} Kenny Jia, Liangyu Wu
+      \item \textbf{Undergraduates:} Gia Ancone, Deniz Yilmaz, Alexander Yue
+    \end{itemize}
+
+    \vspace{0.4cm}
+    \textbf{Interested?} We host students at every level, and there is room for
+    people who love physics, machine learning, hardware, or all three. Come find
+    someone with a Gonski Lab badge and say hello.
+
   \end{block}
 
 \end{column}
