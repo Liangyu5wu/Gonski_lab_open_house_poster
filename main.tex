@@ -61,7 +61,7 @@
 % ====================
 % Font overrides
 % ====================
-\setbeamerfont{headline title}{size=\huge,series=\bfseries}
+\setbeamerfont{headline title}{size=\LARGE,series=\bfseries}
 % \large makes the student line wrap in the narrower header box; bump it back up
 % if \headtextwidth is widened.
 \setbeamerfont{headline author}{size=\normalsize}
@@ -84,6 +84,9 @@
 % Sub-heading inside a block
 \newcommand{\subhead}[1]{%
   \vspace{0.4cm}{\large\bfseries\color{cardinalred}#1}\par\vspace{0.2cm}}
+
+% Shared height for the paired figures in the edge ML section
+\newcommand{\edgefigheight}{7.8cm}
 
 % Reserved space for a section that still needs content
 \newcommand{\placeholder}[1]{%
@@ -191,16 +194,12 @@
 
     \begin{columns}[T]
     \begin{column}{0.53\columnwidth}
-      Potential \textbf{dark matter} candidates can be produced in the decays of
-      heavy scalar particles. These dark matter particles can be
-      \textbf{long-lived}, and decay far away from the primary proton collision
-      point --- leaving behind \textbf{displaced decay vertices} rather than tracks
-      that all point back to one spot.
-
-      \vspace{0.4cm}
-      Using new reconstruction techniques, we can identify these displaced vertices
-      in the ATLAS \textbf{inner tracker} and in the \textbf{calorimeter}, decaying
-      to pairs of electrons.
+      \textbf{Dark matter} candidates can be produced in the decays of heavy scalar
+      particles. Because they can be \textbf{long-lived}, they decay far from the
+      primary proton collision point, leaving \textbf{displaced decay vertices}
+      rather than tracks that all point back to one spot; new reconstruction
+      techniques let us identify these vertices decaying to electron pairs in the
+      ATLAS \textbf{inner tracker} and \textbf{calorimeter}.
     \end{column}
     \begin{column}{0.43\columnwidth}
       \centering
@@ -211,24 +210,19 @@
     \subhead{Anomaly detection in Higgs final states}
 
     The Higgs boson's \textbf{universal coupling to mass} makes it a broadly
-    applicable portal to sectors beyond the Standard Model, and therefore a natural
-    anchor for anomaly detection at a collider. Our \textbf{HAXAD} (Higgs And X
-    Anomaly Detection) strategy searches for anomalies produced \emph{in association
-    with} a Higgs boson, combining ML-based \textbf{feature embedding}, data-driven
-    \textbf{background estimation}, and \textbf{weakly supervised classification}.
+    applicable portal to sectors beyond the Standard Model, and a natural anchor for
+    anomaly detection. Our \textbf{HAXAD} (Higgs And X Anomaly Detection) strategy
+    combines ML-based \textbf{feature embedding}, data-driven \textbf{background
+    estimation} and \textbf{weakly supervised classification} to search for anomalies
+    produced in association with a Higgs boson; a new inference framework now
+    delivers \textbf{signal-agnostic} and signal-specific cross section limits that
+    \textbf{match or exceed} the best limits of an equivalent cut-based search.
 
     \vspace{0.4cm}
     \begin{figure}
       \centering
       \includegraphics[width=0.68\columnwidth]{strategy.pdf}
     \end{figure}
-
-    \vspace{0.3cm}
-    Recent work brings HAXAD to the maturity needed for recorded collider data: two
-    new embedding strategies, and an inference framework giving both
-    \textbf{signal-agnostic} and signal-specific cross section limits. Over a much
-    broader range of signal models, HAXAD \textbf{matches or exceeds} the best
-    individual limits of an equivalent cut-based search.
 
   \end{block}
 
@@ -315,7 +309,10 @@
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.52\columnwidth]{figures/openhouse/drift_cell_ml.png}
+      % Fixed height on both so they line up; the pair is ~36cm of the 37.8cm column
+      \includegraphics[height=\edgefigheight]{figures/openhouse/drift_cell_ml.png}%
+      \hspace{1.5cm}%
+      \includegraphics[height=\edgefigheight]{figures/wf_BSO.png}
     \end{figure}
 
     \vspace{0.3cm}
@@ -368,40 +365,11 @@
     state-of-the-art representations evaluated inside the latency budget of a trigger
     or a front-end ASIC.
 
-    \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.92\columnwidth]{figures/openhouse/fpga_rack.png}
-    \end{figure}
-
     \subhead{Quantum machine learning}
     \placeholder{Content to be added.}
 
   \end{block}
 
-
-  % ---------- Team ----------
-  \begin{block}{Who We Are}
-
-    Our group pursues the application of the latest AI/ML techniques to the
-    challenges of \textbf{data-taking} and \textbf{physics analysis} for the
-    \textbf{ATLAS} experiment at the Large Hadron Collider, hosted at the
-    \textbf{CERN} laboratory in Geneva, Switzerland. We are also involved in R\&D
-    studies and \textbf{strategic planning for next-generation future colliders},
-    such as the proposed \textbf{Future Circular Collider} at CERN.
-
-    \vspace{0.4cm}
-    We sit across SLAC's \textbf{Fundamental Physics} and \textbf{Technology
-    Innovation} Directorates and work with \textbf{Stanford University}, spanning the
-    full chain: from asking what new physics might look like, to training the network,
-    to taping out the chip that runs it.
-
-    \vspace{0.4cm}
-    \textbf{Interested?} We host students at every level, and there is room for
-    people who love physics, machine learning, hardware, or all three. Come find
-    someone with a Gonski Lab badge and say hello.
-
-  \end{block}
 
 \end{column}
 
