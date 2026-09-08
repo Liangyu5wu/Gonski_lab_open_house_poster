@@ -61,19 +61,10 @@
 % ====================
 % Font overrides
 % ====================
-% Title sits a step above \huge; anyfontsize allows the in-between size.
-% \headtitlescale is a percentage of \huge -- set it to 100 for plain \huge.
-\newcommand{\headtitlescale}{112}
-\makeatletter
-\newcommand{\headtitlefont}{%
-  \huge
-  \fontsize{\the\dimexpr\f@size pt*\headtitlescale/100\relax}%
-           {\the\dimexpr\f@baselineskip*\headtitlescale/100\relax}%
-  \selectfont\bfseries}
-\makeatother
-
-% Drop to \normalsize if the student line ever wraps in the header
-\setbeamerfont{headline author}{size=\large}
+\setbeamerfont{headline title}{size=\huge,series=\bfseries}
+% \large makes the student line wrap in the narrower header box; bump it back up
+% if \headtextwidth is widened.
+\setbeamerfont{headline author}{size=\normalsize}
 
 % % ====================
 % Lengths
@@ -135,10 +126,12 @@
 % Override the gemini headline so the title/members block and both logos share one
 % line: text flush left, then the SLAC wordmark, then the Stanford Block S. The
 % flexible gaps are \hfil, so the three pieces spread evenly with no large void.
-% These four knobs are all that need touching to rebalance the header.
-\newcommand{\headtextwidth}{0.60\paperwidth}   % width of the title/members block
-\newcommand{\headslacwidth}{0.21\paperwidth}   % width of the SLAC wordmark
-\newcommand{\headblockheight}{9.5cm}           % height of the Stanford Block S
+% These four knobs are all that need touching to rebalance the header. The SLAC
+% wordmark is a 6:1 lockup, so matching the Block S height costs a lot of width:
+% 26cm wide gives it ~4.3cm of height against the Block S at 5.3cm.
+\newcommand{\headtextwidth}{0.55\paperwidth}   % width of the title/members block
+\newcommand{\headslacwidth}{26cm}              % width of the SLAC wordmark
+\newcommand{\headblockheight}{5.3cm}           % height of the Stanford Block S
 \newcommand{\headlogogap}{2cm}                 % minimum gap between the two logos
 
 \setbeamertemplate{headline}
@@ -150,7 +143,7 @@
       \begin{minipage}[c]{\headtextwidth}
         \raggedright
         \usebeamerfont{headline}
-        {\headtitlefont\usebeamercolor[fg]{headline title}\inserttitle\par}
+        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\par}
         \vskip3ex
         {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\par}
       \end{minipage}%
@@ -196,25 +189,27 @@
 
     \subhead{Dark sector mediators}
 
-    Potential \textbf{dark matter} candidates can be produced in the decays of heavy
-    scalar particles. These dark matter particles can be \textbf{long-lived}, and
-    decay far away from the primary proton collision point --- leaving behind
-    \textbf{displaced decay vertices} rather than tracks that all point back to one
-    spot.
+    \begin{columns}[T]
+    \begin{column}{0.53\columnwidth}
+      Potential \textbf{dark matter} candidates can be produced in the decays of
+      heavy scalar particles. These dark matter particles can be
+      \textbf{long-lived}, and decay far away from the primary proton collision
+      point --- leaving behind \textbf{displaced decay vertices} rather than tracks
+      that all point back to one spot.
 
-    \vspace{0.4cm}
-    \begin{figure}
+      \vspace{0.4cm}
+      Using new reconstruction techniques, we can identify these displaced vertices
+      in the ATLAS \textbf{inner tracker} and in the \textbf{calorimeter}, decaying
+      to pairs of electrons.
+    \end{column}
+    \begin{column}{0.43\columnwidth}
       \centering
-      \includegraphics[width=0.62\columnwidth]{figures/openhouse/dark_sector_feynman.png}
+      \includegraphics[width=0.88\columnwidth]{figures/openhouse/dark_sector_feynman.png}
 
       \figcap{A heavy scalar $S$ decays to a pair of dark photons $Z_d$, each of
       which travels before decaying to an electron-positron pair.}
-    \end{figure}
-
-    \vspace{0.3cm}
-    Using new reconstruction techniques, we can identify these displaced vertices in
-    the ATLAS \textbf{inner tracker} and in the \textbf{calorimeter}, decaying to
-    pairs of electrons.
+    \end{column}
+    \end{columns}
 
     \subhead{Anomaly detection in Higgs final states}
 
