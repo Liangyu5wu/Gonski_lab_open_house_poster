@@ -81,9 +81,6 @@
 % Helpers
 % ====================
 
-% Short lead-in sentence for a block, set slightly larger than body text
-\newcommand{\lead}[1]{{\large\textbf{#1}}\par\vspace{0.2cm}}
-
 % Small caption under a figure
 \newcommand{\figcap}[1]{\vspace{0.15cm}{\small\textit{#1}}}
 
@@ -178,8 +175,6 @@
   % ---------- 1. New physics searches ----------
   \begin{block}{Searching for New Physics}
 
-    \lead{Covering the blind spots.}
-
     Our physics expertise focuses on \textbf{well-motivated BSM extensions that may
     be undercovered at the LHC experiments} --- not because they are unlikely, but
     because they are hard to analyse. \textbf{Complex dark sectors} and
@@ -229,8 +224,6 @@
 
     \begin{columns}[T]
     \begin{column}{0.73\columnwidth}
-      \lead{Deciding what to keep, 40 million times a second.}
-
       The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} event rate down to a
       rate that can be stored to disk. That makes it the gatekeeper of the final
       dataset --- and therefore of all the physics that can be analysed offline.
@@ -293,8 +286,6 @@
   % ---------- 3. Large-scale ML ----------
   \begin{block}{Large-Scale ML for Particle Physics}
 
-    \lead{Learning the language of collision events.}
-
     Beyond single-purpose classifiers, we develop \textbf{transformers} and
     \textbf{foundation models} for analysis design: large models trained once on
     collision data, then adapted to many different searches rather than rebuilt for
@@ -317,8 +308,6 @@
 
   % ---------- 4. Edge ML ----------
   \begin{block}{Edge ML \& Smart Detectors}
-
-    \lead{Put the intelligence where the data is born.}
 
     At-source (\textbf{``edge''}) deployment of AI/ML can address the challenges of
     future ultra-high data rate experiments --- but it demands novel solutions in
@@ -367,8 +356,6 @@
   % ---------- 5. Advancing ML on FPGAs ----------
   \begin{block}{Advancing ML \& Quantum ML on FPGAs}
 
-    \lead{Making state-of-the-art architectures fit in real hardware.}
-
     Also with TID, we develop novel methods to implement machine learning on
     \textbf{FPGAs}, targeting \textbf{ultra-fast inference} and \textbf{low power}
     for applications like online data acquisition and processing.
@@ -378,23 +365,30 @@
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
 
-      \figcap{From architecture to arithmetic to silicon: the MLP-Mixer is rewritten
-      as cheap add/shift operations, then mapped onto FPGA logic.}
+      \figcap{From architecture to arithmetic to silicon: a transformer-like network
+      is rewritten as cheap add/shift operations, then mapped onto FPGA logic.}
     \end{figure}
 
-    \vspace{0.3cm}
-    The \textbf{MLP-Mixer} architecture --- promising for resource-limited,
-    transformer-like learning --- has been successfully implemented. This enables
-    edge and real-time ML to \textbf{scale up} and take advantage of state-of-the-art
-    ML techniques, rather than being stuck with only the smallest networks.
+    \subhead{Foundation models, distilled onto hardware}
+
+    We train a \textbf{foundation model} targeted at detector \textbf{waveforms},
+    then \textbf{compress and distil} it into a student network small enough to run
+    on an FPGA. The large model learns the general shape of detector signals once;
+    the distilled student carries that knowledge at a fraction of the cost.
+
+    \vspace{0.4cm}
+    The same recipe is being applied to large models targeting the wider
+    \textbf{HEP-ex} domain, in pursuit of \textbf{real-time foundation models} ---
+    state-of-the-art representations evaluated inside the latency budget of a trigger
+    or a front-end ASIC.
 
     \vspace{0.4cm}
     \begin{figure}
       \centering
       \includegraphics[width=0.92\columnwidth]{figures/openhouse/fpga_rack.png}
 
-      \figcap{Larger models are split across multiple FPGAs in a single server rack,
-      linked by high-speed streaming interfaces.}
+      \figcap{A distilled model too large for one device is streamed across several
+      FPGAs in a single rack.}
     \end{figure}
 
     \subhead{Quantum machine learning}
