@@ -61,8 +61,18 @@
 % ====================
 % Font overrides
 % ====================
-\setbeamerfont{headline title}{size=\huge,series=\bfseries}
-% Drop to \large if the student line ever wraps in the header
+% Title sits a step above \huge; anyfontsize allows the in-between size.
+% \headtitlescale is a percentage of \huge -- set it to 100 for plain \huge.
+\newcommand{\headtitlescale}{112}
+\makeatletter
+\newcommand{\headtitlefont}{%
+  \huge
+  \fontsize{\the\dimexpr\f@size pt*\headtitlescale/100\relax}%
+           {\the\dimexpr\f@baselineskip*\headtitlescale/100\relax}%
+  \selectfont\bfseries}
+\makeatother
+
+% Drop to \normalsize if the student line ever wraps in the header
 \setbeamerfont{headline author}{size=\large}
 
 % % ====================
@@ -106,7 +116,7 @@
 % Title
 % ====================
 
-\title{Machine Learning \& Microelectronics for\\New Physics Searches at Colliders}
+\title{Machine Learning \& Microelectronics\\for New Physics Searches\\at Colliders}
 
 % Two lines: seniors on the first, students on the second.
 \author{%
@@ -122,10 +132,14 @@
 % Headline layout
 % ====================
 
-% Override the gemini headline: title and members flush left, logos flush right,
-% both on one line. Widths are tuned so the pair fills the page with even margins.
-\newcommand{\headtextwidth}{0.66\paperwidth}
-\newcommand{\headlogowidth}{0.20\paperwidth}
+% Override the gemini headline so the title/members block and both logos share one
+% line: text flush left, then the SLAC wordmark, then the Stanford Block S. The
+% flexible gaps are \hfil, so the three pieces spread evenly with no large void.
+% These four knobs are all that need touching to rebalance the header.
+\newcommand{\headtextwidth}{0.60\paperwidth}   % width of the title/members block
+\newcommand{\headslacwidth}{0.21\paperwidth}   % width of the SLAC wordmark
+\newcommand{\headblockheight}{9.5cm}           % height of the Stanford Block S
+\newcommand{\headlogogap}{2cm}                 % minimum gap between the two logos
 
 \setbeamertemplate{headline}
 {
@@ -136,12 +150,17 @@
       \begin{minipage}[c]{\headtextwidth}
         \raggedright
         \usebeamerfont{headline}
-        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\par}
+        {\headtitlefont\usebeamercolor[fg]{headline title}\inserttitle\par}
         \vskip3ex
         {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\par}
       \end{minipage}%
-      \hfill
-      \ifdefined\insertlogoright\insertlogoright\fi
+      \hfil
+      \raisebox{-0.5\height}{%
+        \includegraphics[width=\headslacwidth]{stanford_logos/SLAC_primary_red.png}}%
+      \hskip\headlogogap
+      \hfil
+      \raisebox{-0.5\height}{%
+        \includegraphics[height=\headblockheight]{stanford_logos/Block_S_2_color.png}}%
       \hskip\sepwidth
     }%
     \vskip6ex
@@ -149,18 +168,6 @@
       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
     }
   \end{beamercolorbox}
-}
-
-% ====================
-% Logos (right side, stacked)
-% ====================
-
-\logoright{%
-  \begin{minipage}[c]{\headlogowidth}
-    \centering
-    \includegraphics[width=0.92\linewidth]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
-    \includegraphics[height=6.0cm]{stanford_logos/Block_S_2_color.png}
-  \end{minipage}%
 }
 
 % ====================
@@ -175,91 +182,7 @@
 
 \begin{column}{\colwidth}
 
-  % ---------- 1. Trigger anomaly detection ----------
-  \begin{block}{Anomaly Detection in the ATLAS Trigger}
-
-    \begin{columns}[T]
-    \begin{column}{0.70\columnwidth}
-      \lead{Deciding what to keep, 40 million times a second.}
-
-      The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} event rate down to a
-      rate that can be stored to disk. That makes it the gatekeeper of the final
-      dataset --- and therefore of all the physics that can be analysed offline.
-
-      \vspace{0.3cm}
-      Our group is \textbf{leading the effort} to introduce real-time anomaly
-      detection algorithms into the ATLAS trigger, with the first implementation
-      entering data-taking in 2025.
-    \end{column}
-    \begin{column}{0.26\columnwidth}
-      \centering
-      \includegraphics[width=0.85\columnwidth]{figures/openhouse/atlas_logo.png}
-    \end{column}
-    \end{columns}
-
-    \vspace{0.4cm}
-    The events this trigger collects sit \emph{below existing trigger thresholds} ---
-    a phase space \textbf{never before seen} by the LHC experiments --- opening up
-    novel discovery potential for new physics.
-
-    \vspace{0.4cm}
-    We use a \textbf{VAE-GAN} trained over collision events, modeled by the
-    four-vectors of their constituent particles. The network learns to reconstruct
-    ordinary events; events it reconstructs \emph{badly} are exactly the ones worth
-    saving.
-
-    \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.72\columnwidth]{figures/openhouse/vae_gan.png}
-
-      \figcap{The VAE-GAN: an encoder compresses each event, a decoder rebuilds it,
-      and a discriminator sharpens the result. Reconstruction error becomes the
-      anomaly score.}
-    \end{figure}
-
-    \vspace{0.4cm}
-    To run these algorithms inside the tight latency and resource budget of the
-    ATLAS trigger, we employ \textbf{``fast ML''} techniques: compression
-    (truncating low-weight nodes), quantization, and reducing the number of loss
-    terms.
-
-    \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.80\columnwidth]{figures/openhouse/anomaly_roc.png}
-
-      \figcap{One trigger, many signals: a single anomaly detection model is
-      sensitive to a wide range of new physics models it was never trained on.}
-    \end{figure}
-
-    \vspace{0.3cm}
-    \textbf{Status:} the first ATLAS anomaly trigger is collecting data, and studies
-    for Run 4 anomaly triggers are ongoing!
-
-  \end{block}
-
-
-  % ---------- 2. Large-scale ML ----------
-  \begin{block}{Large-Scale ML for Particle Physics}
-
-    \lead{Learning the language of collision events.}
-
-    Beyond single-purpose classifiers, we develop \textbf{transformers} and
-    \textbf{foundation models} for analysis design: large models trained once on
-    collision data, then adapted to many different searches rather than rebuilt for
-    each one.
-
-    \subhead{Foundation models for HEP}
-    \placeholder{Content to be added.}
-
-    \subhead{Contrastive learning}
-    \placeholder{Content to be added.}
-
-  \end{block}
-
-
-  % ---------- 3. New physics searches ----------
+  % ---------- 1. New physics searches ----------
   \begin{block}{Searching for New Physics}
 
     \lead{Covering the blind spots.}
@@ -302,6 +225,94 @@
     \placeholder{Higgs anomaly detection results to be added.}
 
   \end{block}
+
+
+  % ---------- 2. Trigger anomaly detection ----------
+  % Laid out as text/figure pairs rather than full-width stacked figures, to
+  % keep the section compact without dropping any of the content.
+  \begin{block}{Anomaly Detection in the ATLAS Trigger}
+
+    \begin{columns}[T]
+    \begin{column}{0.73\columnwidth}
+      \lead{Deciding what to keep, 40 million times a second.}
+
+      The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} event rate down to a
+      rate that can be stored to disk. That makes it the gatekeeper of the final
+      dataset --- and therefore of all the physics that can be analysed offline.
+
+      \vspace{0.3cm}
+      Our group is \textbf{leading the effort} to introduce real-time anomaly
+      detection algorithms into the ATLAS trigger, with the first implementation
+      entering data-taking in 2025.
+    \end{column}
+    \begin{column}{0.23\columnwidth}
+      \centering
+      \includegraphics[width=0.9\columnwidth]{figures/openhouse/atlas_logo.png}
+    \end{column}
+    \end{columns}
+
+    \vspace{0.3cm}
+    The events this trigger collects sit \emph{below existing trigger thresholds} ---
+    a phase space \textbf{never before seen} by the LHC experiments --- opening up
+    novel discovery potential for new physics.
+
+    \vspace{0.4cm}
+    \begin{columns}[T]
+    \begin{column}{0.40\columnwidth}
+      We use a \textbf{VAE-GAN} trained over collision events, modeled by the
+      four-vectors of their constituent particles. The network learns to reconstruct
+      ordinary events; events it reconstructs \emph{badly} are exactly the ones worth
+      saving.
+    \end{column}
+    \begin{column}{0.56\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/vae_gan.png}
+
+      \figcap{Encoder, decoder and discriminator: the reconstruction error becomes
+      the anomaly score.}
+    \end{column}
+    \end{columns}
+
+    \vspace{0.4cm}
+    \begin{columns}[T]
+    \begin{column}{0.42\columnwidth}
+      To run these algorithms inside the tight latency and resource budget of the
+      trigger, we employ \textbf{``fast ML''} techniques: compression (truncating
+      low-weight nodes), quantization, and reducing the number of loss terms.
+
+      \vspace{0.4cm}
+      \textbf{Status:} the first ATLAS anomaly trigger is collecting data, and
+      studies for Run 4 anomaly triggers are ongoing!
+    \end{column}
+    \begin{column}{0.54\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/anomaly_roc.png}
+
+      \figcap{One trigger, many signals: a single model is sensitive to a wide range
+      of new physics it was never trained on.}
+    \end{column}
+    \end{columns}
+
+  \end{block}
+
+  % ---------- 3. Large-scale ML ----------
+  \begin{block}{Large-Scale ML for Particle Physics}
+
+    \lead{Learning the language of collision events.}
+
+    Beyond single-purpose classifiers, we develop \textbf{transformers} and
+    \textbf{foundation models} for analysis design: large models trained once on
+    collision data, then adapted to many different searches rather than rebuilt for
+    each one.
+
+    \subhead{Foundation models for HEP}
+    \placeholder{Content to be added.}
+
+    \subhead{Contrastive learning}
+    \placeholder{Content to be added.}
+
+  \end{block}
+
 
 \end{column}
 
