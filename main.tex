@@ -62,8 +62,7 @@
 % Font overrides
 % ====================
 \setbeamerfont{headline title}{size=\huge,series=\bfseries}
-\setbeamerfont{headline author}{size=\large}
-\setbeamerfont{headline institute}{size=\normalsize}
+\setbeamerfont{headline author}{size=\Large}
 
 % % ====================
 % Lengths
@@ -92,29 +91,58 @@
 
 \title{Machine Learning \& Microelectronics for\\New Physics Searches at Colliders}
 
-\author{\textbf{PI:} Julia Gonski \quad\textbf{Postdocs:} Sagar Addepalli, Qibin Liu \quad\textbf{PhD:} Kenny Jia, Liangyu Wu \quad\textbf{Undergrads:} Gia Ancone, Deniz Yilmaz, Alexander Yue}
+\author{%
+  \textbf{PI:} Julia Gonski \qquad \textbf{Postdocs:} Sagar Addepalli, Qibin Liu \\[0.8ex]
+  \textbf{PhD:} Kenny Jia, Liangyu Wu \qquad \textbf{Undergrads:} Gia Ancone, Deniz Yilmaz, Alexander Yue%
+}
 
-\institute[shortinst]{Fundamental Physics Directorate \quad$\bullet$\quad SLAC National Accelerator Laboratory \quad$\bullet$\quad Stanford University}
+% No \institute and no \footercontent: the header carries the title and authors
+% only, and the gemini footline template draws nothing when \footercontent is
+% undefined, so the poster has no bottom band at all.
 
 % ====================
-% Footer
+% Headline layout
 % ====================
 
-\footercontent{%
-  \hfill
-  \raisebox{-0.35\height}{\includegraphics[height=3.2cm]{stanford_logos/doe_stanford_seal.png}}%
-  \hspace{2cm}
-  \textbf{SLAC Open House} --- stop by, ask us anything, and see the chips and boards up close!
-  \hfill}
+% Override the gemini headline: drop the institute line and move the logo stack
+% further right, keeping a gap before the title.
+% How far in from the left paper edge the logo stack sits.
+\newcommand{\logoleftinset}{5cm}
+
+\setbeamertemplate{headline}
+{
+  \begin{beamercolorbox}[wd=\paperwidth]{headline}
+    \vskip6ex
+    \hspace*{0.25\paperwidth}%
+    \begin{minipage}[c]{0.72\paperwidth}
+      \centering
+      \usebeamerfont{headline}
+      {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\\[0.5ex]}
+      \vskip2ex
+      {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\\[0.5ex]}
+    \end{minipage}
+    \vskip6ex
+    \ifbeamercolorempty[bg]{headline rule}{}{
+      \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
+    }
+  \end{beamercolorbox}
+  \begin{tikzpicture}[remember picture,overlay]
+    \ifdefined\insertlogoleft
+      \node[anchor=north west, inner sep=0pt]
+        at ([xshift=\logoleftinset, yshift=-2.5cm]current page.north west)
+        {\insertlogoleft};
+    \fi
+  \end{tikzpicture}
+}
 
 % ====================
 % Logos (left side, stacked)
 % ====================
 
 \logoleft{%
-  \begin{minipage}[c]{16cm}
+  \begin{minipage}[c]{14cm}
     \centering
-    \includegraphics[width=16cm]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
+    \includegraphics[width=14cm]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
     \includegraphics[height=6.0cm]{stanford_logos/Block_S_2_color.png}
   \end{minipage}%
 }
