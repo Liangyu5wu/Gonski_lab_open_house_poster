@@ -104,7 +104,7 @@
 % Title
 % ====================
 
-\title{Machine Learning \& Microelectronics\\for New Physics Searches\\at Colliders}
+\title{Machine Learning \& Microelectronics for\\New Physics Searches at Colliders}
 
 % Two lines: seniors on the first, students on the second.
 \author{%
@@ -125,10 +125,10 @@
 % flexible gaps are \hfil, so the three pieces spread evenly with no large void.
 % These four knobs are all that need touching to rebalance the header. The SLAC
 % wordmark is a 6:1 lockup, so matching the Block S height costs a lot of width:
-% 26cm wide gives it ~4.3cm of height against the Block S at 5.3cm.
-\newcommand{\headtextwidth}{0.55\paperwidth}   % width of the title/members block
-\newcommand{\headslacwidth}{26cm}              % width of the SLAC wordmark
-\newcommand{\headblockheight}{5.3cm}           % height of the Stanford Block S
+% 28cm wide gives it ~4.7cm of height against the Block S at 6.4cm.
+\newcommand{\headtextwidth}{0.50\paperwidth}   % width of the title/members block
+\newcommand{\headslacwidth}{28cm}              % width of the SLAC wordmark
+\newcommand{\headblockheight}{6.4cm}           % height of the Stanford Block S
 \newcommand{\headlogogap}{2cm}                 % minimum gap between the two logos
 
 \setbeamertemplate{headline}
@@ -177,12 +177,11 @@
 
     \begin{columns}[T]
     \begin{column}{0.74\columnwidth}
-      Our physics expertise focuses on \textbf{well-motivated BSM extensions that
-      may be undercovered at the LHC experiments} --- not because they are unlikely,
-      but because they are hard to analyse. \textbf{Complex dark sectors} and
-      \textbf{long-lived particles} are the prime examples. We respond to these
-      analysis-related challenges by developing novel ML approaches: anomaly
-      detection, transformers, foundation models, and more.
+      We focus on \textbf{well-motivated BSM extensions undercovered at the LHC}
+      --- not because they are unlikely, but because they are hard to analyse.
+      \textbf{Complex dark sectors} and \textbf{long-lived particles} are the prime
+      examples, and we meet those analysis challenges with novel ML: anomaly
+      detection, transformers, and foundation models.
     \end{column}
     \begin{column}{0.22\columnwidth}
       \centering
@@ -233,21 +232,18 @@
   \begin{block}{Anomaly Detection in the ATLAS Trigger}
 
     The ATLAS \textbf{trigger} filters the LHC's \SI{40}{MHz} collision rate down to
-    what can be stored to disk, making it the gatekeeper of the final dataset --- and
-    of all the physics that can be analysed offline.
-
-    \vspace{0.4cm}
-    Our group is \textbf{leading the effort} to bring real-time anomaly detection
-    into that trigger, with the first implementation entering data-taking in 2025.
-    The events it collects sit \emph{below existing trigger thresholds} --- a phase
+    what can be stored to disk, making it the gatekeeper of all physics analysed
+    offline. Our group is \textbf{leading the effort} to bring real-time anomaly
+    detection into that trigger: the first implementation entered data-taking in
+    2025, collecting events \emph{below existing trigger thresholds} --- a phase
     space \textbf{never before seen} at the LHC.
 
     \vspace{0.4cm}
     \begin{columns}[T]
     \begin{column}{0.42\columnwidth}
-      Our \textbf{VAE-GAN} is trained on collision events described by the
-      four-vectors of their constituent particles. Events it reconstructs
-      \emph{badly} are exactly the ones worth saving.
+      Our \textbf{VAE-GAN} is trained on events described by the four-vectors of
+      their constituent particles; the ones it reconstructs \emph{badly} are the
+      ones worth saving.
     \end{column}
     \begin{column}{0.54\columnwidth}
       \centering
@@ -315,26 +311,28 @@
       \includegraphics[height=\edgefigheight]{figures/wf_BSO.png}
     \end{figure}
 
-    \vspace{0.3cm}
-    We are developing \textbf{embedded FPGA (eFPGA)} technology, capable of deploying
-    reconfigurable logic blocks directly onto \textbf{ASICs}. This combines the
-    benefits of an FPGA with the flexibility and processing power required for
-    on-detector implementation --- so the algorithm can be updated long after the
-    chip is built.
-
     \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.44\columnwidth]{figures/openhouse/efpga_board.png}
-    \end{figure}
+    \begin{columns}[T]
+    \begin{column}{0.60\columnwidth}
+      We are developing \textbf{embedded FPGA (eFPGA)} technology, capable of
+      deploying reconfigurable logic blocks directly onto \textbf{ASICs}. This
+      combines the benefits of an FPGA with the flexibility and processing power
+      required for on-detector implementation --- so the algorithm can be updated
+      long after the chip is built.
 
-    \vspace{0.3cm}
-    In collaboration with engineers in SLAC's \textbf{Technology Innovation
-    Directorate (TID)}, we explore eFPGA applications in advanced subsystems for
-    future experiments such as \textbf{FCC-ee} --- including \textbf{drift chambers}
-    and \textbf{dual-readout calorimeters} --- as well as for applications beyond
-    particle physics, such as \textbf{photon science} and \textbf{quantum information
-    science}.
+      \vspace{0.4cm}
+      In collaboration with engineers in SLAC's \textbf{Technology Innovation
+      Directorate (TID)}, we explore eFPGA applications in advanced subsystems for
+      future experiments such as \textbf{FCC-ee} --- including \textbf{drift
+      chambers} and \textbf{dual-readout calorimeters} --- as well as beyond
+      particle physics, in \textbf{photon science} and \textbf{quantum information
+      science}.
+    \end{column}
+    \begin{column}{0.36\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/efpga_board.png}
+    \end{column}
+    \end{columns}
 
   \end{block}
 
