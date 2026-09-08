@@ -62,7 +62,8 @@
 % Font overrides
 % ====================
 \setbeamerfont{headline title}{size=\huge,series=\bfseries}
-\setbeamerfont{headline author}{size=\Large}
+% Drop to \large if the student line ever wraps in the header
+\setbeamerfont{headline author}{size=\large}
 
 % % ====================
 % Lengths
@@ -85,15 +86,32 @@
 % Small caption under a figure
 \newcommand{\figcap}[1]{\vspace{0.15cm}{\small\textit{#1}}}
 
+% Sub-heading inside a block
+\newcommand{\subhead}[1]{%
+  \vspace{0.4cm}{\large\bfseries\color{cardinalred}#1}\par\vspace{0.2cm}}
+
+% Reserved space for a section that still needs content
+\newcommand{\placeholder}[1]{%
+  \vspace{0.3cm}
+  \begin{center}
+    \colorbox{boxgray}{%
+      \parbox{0.92\columnwidth}{%
+        \centering\vspace{1.2cm}%
+        \textit{\textcolor{coolgray}{#1}}%
+        \vspace{1.2cm}}}%
+  \end{center}
+  \vspace{0.3cm}}
+
 % ====================
 % Title
 % ====================
 
 \title{Machine Learning \& Microelectronics for\\New Physics Searches at Colliders}
 
+% Two lines: seniors on the first, students on the second.
 \author{%
-  \textbf{PI:} Julia Gonski \qquad \textbf{Postdocs:} Sagar Addepalli, Qibin Liu \\[0.8ex]
-  \textbf{PhD:} Kenny Jia, Liangyu Wu \qquad \textbf{Undergrads:} Gia Ancone, Deniz Yilmaz, Alexander Yue%
+  \textbf{PI:} Julia Gonski \quad \textbf{Postdocs:} Sagar Addepalli, Qibin Liu \\[0.8ex]
+  \textbf{PhD:} Kenny Jia, Liangyu Wu \quad \textbf{Undergrads:} Gia Ancone, Deniz Yilmaz, Alexander Yue%
 }
 
 % No \institute and no \footercontent: the header carries the title and authors
@@ -104,45 +122,43 @@
 % Headline layout
 % ====================
 
-% Override the gemini headline: drop the institute line and move the logo stack
-% further right, keeping a gap before the title.
-% How far in from the left paper edge the logo stack sits.
-\newcommand{\logoleftinset}{5cm}
+% Override the gemini headline: title and members flush left, logos flush right,
+% both on one line. Widths are tuned so the pair fills the page with even margins.
+\newcommand{\headtextwidth}{0.66\paperwidth}
+\newcommand{\headlogowidth}{0.20\paperwidth}
 
 \setbeamertemplate{headline}
 {
   \begin{beamercolorbox}[wd=\paperwidth]{headline}
     \vskip6ex
-    \hspace*{0.25\paperwidth}%
-    \begin{minipage}[c]{0.72\paperwidth}
-      \centering
-      \usebeamerfont{headline}
-      {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\\[0.5ex]}
-      \vskip2ex
-      {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\\[0.5ex]}
-    \end{minipage}
+    \hbox to \paperwidth{%
+      \hskip\sepwidth
+      \begin{minipage}[c]{\headtextwidth}
+        \raggedright
+        \usebeamerfont{headline}
+        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\par}
+        \vskip3ex
+        {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\par}
+      \end{minipage}%
+      \hfill
+      \ifdefined\insertlogoright\insertlogoright\fi
+      \hskip\sepwidth
+    }%
     \vskip6ex
     \ifbeamercolorempty[bg]{headline rule}{}{
       \begin{beamercolorbox}[wd=\paperwidth,colsep=0.5ex]{headline rule}\end{beamercolorbox}
     }
   \end{beamercolorbox}
-  \begin{tikzpicture}[remember picture,overlay]
-    \ifdefined\insertlogoleft
-      \node[anchor=north west, inner sep=0pt]
-        at ([xshift=\logoleftinset, yshift=-2.5cm]current page.north west)
-        {\insertlogoleft};
-    \fi
-  \end{tikzpicture}
 }
 
 % ====================
-% Logos (left side, stacked)
+% Logos (right side, stacked)
 % ====================
 
-\logoleft{%
-  \begin{minipage}[c]{14cm}
+\logoright{%
+  \begin{minipage}[c]{\headlogowidth}
     \centering
-    \includegraphics[width=14cm]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
+    \includegraphics[width=0.92\linewidth]{stanford_logos/SLAC_primary_red.png}\\[1.0cm]
     \includegraphics[height=6.0cm]{stanford_logos/Block_S_2_color.png}
   \end{minipage}%
 }
@@ -159,57 +175,24 @@
 
 \begin{column}{\colwidth}
 
-  \begin{block}{What Are We Looking For?}
-
-    \begin{columns}[T]
-    \begin{column}{0.60\columnwidth}
-      The \textbf{Standard Model} of particle physics describes every particle we
-      have ever discovered --- and yet we know it is incomplete. It says nothing
-      about dark matter, and cannot explain why the universe contains matter at
-      all. Something \emph{new} must be out there.
-
-      \vspace{0.4cm}
-      At CERN's \textbf{Large Hadron Collider}, the \textbf{ATLAS} experiment
-      smashes protons together 40 million times per second, hoping to make that
-      new physics in the lab. The catch: we can only afford to record a tiny
-      fraction of those collisions, and the decision about what to keep has to be
-      made in \emph{microseconds}.
-
-      \vspace{0.4cm}
-      Our group attacks that problem from both ends --- the
-      \textbf{algorithms} that decide what is interesting, and the
-      \textbf{microelectronics} that run them right next to the detector.
-    \end{column}
-    \begin{column}{0.36\columnwidth}
-      \centering
-      \includegraphics[width=0.72\columnwidth]{figures/openhouse/atlas_logo.png}
-
-      \figcap{The ATLAS experiment at CERN}
-    \end{column}
-    \end{columns}
-
-  \end{block}
-
-
-  \begin{alertblock}{Our Big Idea}
-
-    Instead of telling the detector \emph{exactly} what to look for, we teach it
-    what ordinary collisions look like --- and then ask it to flag anything
-    \textbf{surprising}. Doing this in real time, in a chip, means we can catch new
-    physics we never thought to search for.
-
-  \end{alertblock}
-
-
+  % ---------- 1. Trigger anomaly detection ----------
   \begin{block}{Anomaly Detection in the ATLAS Trigger}
 
-    \lead{Looking for anything that isn't ``normal.''}
+    \begin{columns}[T]
+    \begin{column}{0.70\columnwidth}
+      \lead{Looking for anything that isn't ``normal.''}
 
-    Machine learning-based anomaly detection in offline ATLAS searches can enable
-    broad sensitivity to \emph{any} kind of new physics that is not Standard
-    Model-like. Pushing this capability down to the \textbf{trigger level} --- the
-    ultra-low-latency system that decides which collisions to keep --- gives us the
-    potential to write out never-before-seen events from the LHC.
+      Machine learning-based anomaly detection in offline ATLAS searches can enable
+      broad sensitivity to \emph{any} kind of new physics that is not Standard
+      Model-like. Pushing this capability down to the \textbf{trigger level} --- the
+      ultra-low-latency system that decides which collisions to keep --- gives us the
+      potential to write out never-before-seen events from the LHC.
+    \end{column}
+    \begin{column}{0.26\columnwidth}
+      \centering
+      \includegraphics[width=0.85\columnwidth]{figures/openhouse/atlas_logo.png}
+    \end{column}
+    \end{columns}
 
     \vspace{0.4cm}
     We use a \textbf{VAE-GAN} trained over collision events, modeled by the
@@ -217,41 +200,56 @@
     ordinary events; events it reconstructs \emph{badly} are exactly the ones worth
     saving.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.98\columnwidth]{figures/openhouse/vae_gan.png}
+      \includegraphics[width=0.72\columnwidth]{figures/openhouse/vae_gan.png}
 
       \figcap{The VAE-GAN: an encoder compresses each event, a decoder rebuilds it,
       and a discriminator sharpens the result. Reconstruction error becomes the
       anomaly score.}
     \end{figure}
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     To run these algorithms inside the tight latency and resource budget of the
     ATLAS trigger, we employ \textbf{``fast ML''} techniques: compression
     (truncating low-weight nodes), quantization, and reducing the number of loss
     terms.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.88\columnwidth]{figures/openhouse/anomaly_roc.png}
+      \includegraphics[width=0.80\columnwidth]{figures/openhouse/anomaly_roc.png}
 
       \figcap{One trigger, many signals: a single anomaly detection model is
       sensitive to a wide range of new physics models it was never trained on.}
     \end{figure}
 
-    \vspace{0.4cm}
+    \vspace{0.3cm}
     \textbf{Status:} the first ATLAS anomaly trigger is on track for data-taking in
     2025, and studies for Run 4 anomaly triggers are ongoing!
 
   \end{block}
 
 
-  \begin{block}{Searching for Dark Sector Mediators}
+  % ---------- 2. Large-scale ML ----------
+  \begin{block}{Large-Scale ML for Particle Physics}
 
-    \lead{Hunting particles that decay far from where they were born.}
+    \lead{Foundation models and contrastive learning for collider data.}
+
+    \subhead{Foundation models for HEP}
+    \placeholder{Content to be added.}
+
+    \subhead{Contrastive learning}
+    \placeholder{Content to be added.}
+
+  \end{block}
+
+
+  % ---------- 3. New physics searches ----------
+  \begin{block}{Searching for New Physics}
+
+    \subhead{Dark sector mediators}
 
     Potential \textbf{dark matter} candidates can be produced in the decays of heavy
     scalar particles. These dark matter particles can be \textbf{long-lived}, and
@@ -259,21 +257,27 @@
     \textbf{displaced decay vertices} rather than tracks that all point back to one
     spot.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.78\columnwidth]{figures/openhouse/dark_sector_feynman.png}
+      \includegraphics[width=0.62\columnwidth]{figures/openhouse/dark_sector_feynman.png}
 
       \figcap{A heavy scalar $S$ decays to a pair of dark photons $Z_d$, each of
       which travels before decaying to an electron-positron pair.}
     \end{figure}
 
-    \vspace{0.4cm}
+    \vspace{0.3cm}
     Using new reconstruction techniques, we can identify these displaced vertices in
     the ATLAS \textbf{inner tracker} and in the \textbf{calorimeter}, decaying to
-    pairs of electrons. Anomaly detection is also used here, to look for signs of
-    new physics decaying into electron or photon final states with unusual
-    topologies.
+    pairs of electrons.
+
+    \subhead{Anomaly detection in Higgs final states}
+
+    Anomaly detection is also used to look for signs of new physics decaying into
+    \textbf{electron or photon final states with unusual topologies} --- signatures
+    that no dedicated search would have been designed to catch.
+
+    \placeholder{Higgs anomaly detection results to be added.}
 
   \end{block}
 
@@ -283,6 +287,7 @@
 
 \begin{column}{\colwidth}
 
+  % ---------- 4. Edge ML ----------
   \begin{block}{Edge ML \& Smart Detectors}
 
     \lead{Put the intelligence where the data is born.}
@@ -292,17 +297,17 @@
     data acquisition system. Rather than shipping every raw sample off the detector,
     a smart front-end sends only what matters.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.85\columnwidth]{figures/openhouse/drift_cell_ml.png}
+      \includegraphics[width=0.72\columnwidth]{figures/openhouse/drift_cell_ml.png}
 
       \figcap{Feature extraction at the edge: a whole pattern of ionization clusters
       in a drift cell is compressed by a small network into the few numbers that the
       rest of the experiment actually needs.}
     \end{figure}
 
-    \vspace{0.4cm}
+    \vspace{0.3cm}
     In collaboration with SLAC's \textbf{Technology Innovation Directorate (TID)}, we
     are exploring \textbf{eFPGAs} for ML-based signal processing, leveraging
     innovative data compression algorithms in advanced tracker and calorimeter
@@ -314,17 +319,17 @@
     trackers}; we develop small compression models that perform key feature
     extraction for deployment directly in the front-end readout.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.85\columnwidth]{figures/openhouse/efpga_board.png}
+      \includegraphics[width=0.62\columnwidth]{figures/openhouse/efpga_board.png}
 
       \figcap{An eFPGA test chip on its carrier board (right: the bare die under a
       microscope) --- a reconfigurable ML engine small enough to live on the
       detector.}
     \end{figure}
 
-    \vspace{0.4cm}
+    \vspace{0.3cm}
     \textbf{Embedded field programmable gate arrays (eFPGAs)} allow the design of an
     ASIC that is usable at the detector front-end while still carrying a
     \textbf{reconfigurable} digital logic fabric --- so the algorithm can be updated
@@ -333,7 +338,8 @@
   \end{block}
 
 
-  \begin{block}{Advancing ML on FPGAs \& MLP-Mixers}
+  % ---------- 5. Advancing ML on FPGAs ----------
+  \begin{block}{Advancing ML \& Quantum ML on FPGAs}
 
     \lead{Making state-of-the-art architectures fit in real hardware.}
 
@@ -341,7 +347,7 @@
     \textbf{FPGAs}, targeting \textbf{ultra-fast inference} and \textbf{low power}
     for applications like online data acquisition and processing.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
@@ -350,40 +356,28 @@
       as cheap add/shift operations, then mapped onto FPGA logic.}
     \end{figure}
 
-    \vspace{0.4cm}
+    \vspace{0.3cm}
     The \textbf{MLP-Mixer} architecture --- promising for resource-limited,
     transformer-like learning --- has been successfully implemented. This enables
     edge and real-time ML to \textbf{scale up} and take advantage of state-of-the-art
     ML techniques, rather than being stuck with only the smallest networks.
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=\columnwidth]{figures/openhouse/fpga_rack.png}
+      \includegraphics[width=0.92\columnwidth]{figures/openhouse/fpga_rack.png}
 
       \figcap{Larger models are split across multiple FPGAs in a single server rack,
       linked by high-speed streaming interfaces.}
     \end{figure}
 
-  \end{block}
-
-
-  \begin{block}{Why It Matters}
-
-    \begin{itemize}
-      \item \textbf{Discovery reach.} A trigger that recognizes ``weird'' instead of
-      one specific signature keeps our options open for physics nobody has predicted.
-      \item \textbf{Data volume.} Smart front-ends cut the data rate at the source,
-      which is what makes the next generation of ultra-granular detectors affordable
-      at all.
-      \item \textbf{Beyond physics.} The same recipe --- tiny, quantized networks on
-      radiation-tolerant reconfigurable chips with nanosecond latency --- shows up in
-      medical imaging, accelerator controls, photon science, and autonomous systems.
-    \end{itemize}
+    \subhead{Quantum machine learning}
+    \placeholder{Content to be added.}
 
   \end{block}
 
 
+  % ---------- Team ----------
   \begin{block}{Who We Are}
 
     We are an experimental particle physics group at \textbf{SLAC National
@@ -391,14 +385,6 @@
     \textbf{Technology Innovation} Directorates and with \textbf{Stanford
     University}. Our work spans the full chain: from asking what new physics might
     look like, to training the network, to taping out the chip that runs it.
-
-    \vspace{0.4cm}
-    \begin{itemize}
-      \item \textbf{PI:} Julia Gonski
-      \item \textbf{Postdocs:} Sagar Addepalli, Qibin Liu
-      \item \textbf{Graduate students:} Kenny Jia, Liangyu Wu
-      \item \textbf{Undergraduates:} Gia Ancone, Deniz Yilmaz, Alexander Yue
-    \end{itemize}
 
     \vspace{0.4cm}
     \textbf{Interested?} We host students at every level, and there is room for
