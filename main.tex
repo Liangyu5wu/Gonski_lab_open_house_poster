@@ -81,9 +81,13 @@
 % Helpers
 % ====================
 
-% Sub-heading inside a block
+% Sub-heading inside a block. Both skips are starred: plain \vspace glue is
+% discardable in vertical mode, so the trailing space vanished whenever a subhead
+% was followed by \begin{columns} rather than by an ordinary paragraph.
 \newcommand{\subhead}[1]{%
-  \vspace{0.4cm}{\large\bfseries\color{cardinalred}#1}\par\vspace{0.2cm}}
+  \vspace*{0.7cm}%
+  {\large\bfseries\color{cardinalred}#1}%
+  \par\vspace*{0.4cm}}
 
 % Shared height for the paired figures in the edge ML section
 \newcommand{\edgefigheight}{7.8cm}
