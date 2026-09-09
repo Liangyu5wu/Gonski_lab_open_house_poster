@@ -208,24 +208,20 @@
 
     \subhead{Anomaly detection in Higgs final states}
 
-    % [c] so the short, wide strategy diagram centres against the taller paragraph
-    \begin{columns}[c]
-    \begin{column}{0.53\columnwidth}
-      The Higgs boson's \textbf{universal coupling to mass} makes it a broadly
-      applicable portal to sectors beyond the Standard Model, and a natural anchor
-      for anomaly detection. Our \textbf{HAXAD} (Higgs And X Anomaly Detection)
-      strategy combines ML-based \textbf{feature embedding}, data-driven
-      \textbf{background estimation} and \textbf{weakly supervised classification}
-      to search for anomalies produced in association with a Higgs boson; a new
-      inference framework now delivers \textbf{signal-agnostic} and signal-specific
-      cross section limits that \textbf{match or exceed} the best limits of an
-      equivalent cut-based search.
-    \end{column}
-    \begin{column}{0.43\columnwidth}
+    The Higgs boson's \textbf{universal coupling to mass} makes it a broadly
+    applicable portal to sectors beyond the Standard Model, and a natural anchor for
+    anomaly detection. Our \textbf{HAXAD} (Higgs And X Anomaly Detection) strategy
+    combines ML-based \textbf{feature embedding}, data-driven \textbf{background
+    estimation} and \textbf{weakly supervised classification} to search for anomalies
+    produced in association with a Higgs boson; a new inference framework now
+    delivers \textbf{signal-agnostic} and signal-specific cross section limits that
+    \textbf{match or exceed} the best limits of an equivalent cut-based search.
+
+    \vspace{0.4cm}
+    \begin{figure}
       \centering
-      \includegraphics[width=\columnwidth]{strategy.pdf}
-    \end{column}
-    \end{columns}
+      \includegraphics[width=0.68\columnwidth]{strategy.pdf}
+    \end{figure}
 
   \end{block}
 
@@ -274,6 +270,12 @@
 
   \end{block}
 
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
   % ---------- 3. Large-scale ML ----------
   \begin{block}{Large-Scale ML for Particle Physics}
 
@@ -290,12 +292,6 @@
 
   \end{block}
 
-
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
 
   % ---------- 4. Edge ML ----------
   \begin{block}{Edge ML \& Smart Detectors}
