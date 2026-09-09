@@ -61,10 +61,21 @@
 % ====================
 % Font overrides
 % ====================
-\setbeamerfont{headline title}{size=\LARGE,series=\bfseries}
-% \large makes the student line wrap in the narrower header box; bump it back up
-% if \headtextwidth is widened.
-\setbeamerfont{headline author}{size=\normalsize}
+% Header type is scaled off the standard LaTeX sizes by \headfontscale percent,
+% so the title and member lines can be nudged without jumping a whole size step
+% (\LARGE -> \huge is far too big for the header box). anyfontsize, loaded above,
+% permits the in-between sizes. Push this past ~115 and \headtextwidth needs
+% widening too, or the student line will wrap.
+\newcommand{\headfontscale}{110}
+\makeatletter
+\newcommand{\headscaled}[1]{%
+  #1% select the base size, then rescale it
+  \fontsize{\the\dimexpr\f@size pt*\headfontscale/100\relax}%
+           {\the\dimexpr\f@baselineskip*\headfontscale/100\relax}%
+  \selectfont}
+\makeatother
+\newcommand{\headtitlefont}{\headscaled{\LARGE}\bfseries}
+\newcommand{\headauthorfont}{\headscaled{\normalsize}}
 
 % % ====================
 % Lengths
@@ -130,7 +141,7 @@
 % These four knobs are all that need touching to rebalance the header. The SLAC
 % wordmark is a 6:1 lockup, so matching the Block S height costs a lot of width:
 % 28cm wide gives it ~4.7cm of height against the Block S at 6.4cm.
-\newcommand{\headtextwidth}{0.50\paperwidth}   % width of the title/members block
+\newcommand{\headtextwidth}{0.53\paperwidth}   % width of the title/members block
 \newcommand{\headslacwidth}{28cm}              % width of the SLAC wordmark
 \newcommand{\headblockheight}{6.4cm}           % height of the Stanford Block S
 \newcommand{\headlogogap}{2cm}                 % minimum gap between the two logos
@@ -144,9 +155,9 @@
       \begin{minipage}[c]{\headtextwidth}
         \raggedright
         \usebeamerfont{headline}
-        {\usebeamerfont{headline title}\usebeamercolor[fg]{headline title}\inserttitle\par}
+        {\headtitlefont\usebeamercolor[fg]{headline title}\inserttitle\par}
         \vskip3ex
-        {\usebeamerfont{headline author}\usebeamercolor[fg]{headline author}\insertauthor\par}
+        {\headauthorfont\usebeamercolor[fg]{headline author}\insertauthor\par}
       \end{minipage}%
       \hfil
       \raisebox{-0.5\height}{%
