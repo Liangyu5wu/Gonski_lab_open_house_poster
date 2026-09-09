@@ -279,29 +279,21 @@
   % ---------- 3. Large-scale ML ----------
   \begin{block}{Large-Scale ML for Particle Physics}
 
-    Beyond single-purpose classifiers, we develop \textbf{transformers} and
-    \textbf{foundation models} for analysis design: large models trained once on
-    collision data, then adapted to many different searches rather than rebuilt for
-    each one.
+    Modern ML lets us exploit the full statistical power of collider datasets, with
+    \textbf{transformers} and \textbf{foundation models} taking over from one-off,
+    single-purpose networks.
 
     \subhead{Foundation models for HEP}
 
     \begin{columns}[T]
     \begin{column}{0.52\columnwidth}
-      \textbf{NEXUS} is a \emph{lightweight} foundation model --- a fully connected
-      autoencoder with just \textbf{3 million parameters}, pre-trained with
-      \textbf{no supervision} on \textbf{20 million} LHC collision events described
-      by charged-particle tracks.
-
-      \vspace{0.4cm}
-      One pre-trained backbone then transfers to many downstream tasks --- Standard
-      Model and BSM process classification, jet reconstruction, $b$-tagging, anomaly
-      detection --- beating the same architecture trained from scratch while needing
-      far \textbf{fewer labelled events}. The representation even carries outside
-      particle physics, to \textbf{gravitational waves}, \textbf{coastal flooding}
-      and \textbf{neural activity}. Being attention-free, NEXUS is far cheaper than
-      a transformer of comparable scale, opening the door to \textbf{real-time and
-      edge} foundation models.
+      We built \textbf{NEXUS}, a \emph{lightweight} foundation model for collider
+      data: one network pre-trained on \textbf{20 million} LHC collisions, then
+      reused across many different analyses instead of training a new model from
+      scratch every time. What it learns from particle collisions even transfers
+      beyond physics --- to \textbf{gravitational waves}, \textbf{coastal flooding},
+      even \textbf{brain activity} --- and it stays small enough to run in real
+      time.
     \end{column}
     \begin{column}{0.44\columnwidth}
       \centering
