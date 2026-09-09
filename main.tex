@@ -220,7 +220,7 @@
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.68\columnwidth]{strategy.pdf}
+      \includegraphics[width=0.68\columnwidth]{figures/openhouse/strategy.pdf}
     \end{figure}
 
   \end{block}
@@ -285,7 +285,29 @@
     each one.
 
     \subhead{Foundation models for HEP}
-    \placeholder{Content to be added.}
+
+    \begin{columns}[T]
+    \begin{column}{0.52\columnwidth}
+      \textbf{NEXUS} is a \emph{lightweight} foundation model --- a fully connected
+      autoencoder with just \textbf{3 million parameters}, pre-trained with
+      \textbf{no supervision} on \textbf{20 million} LHC collision events described
+      by charged-particle tracks.
+
+      \vspace{0.4cm}
+      One pre-trained backbone then transfers to many downstream tasks --- Standard
+      Model and BSM process classification, jet reconstruction, $b$-tagging, anomaly
+      detection --- beating the same architecture trained from scratch while needing
+      far \textbf{fewer labelled events}. The representation even carries outside
+      particle physics, to \textbf{gravitational waves}, \textbf{coastal flooding}
+      and \textbf{neural activity}. Being attention-free, NEXUS is far cheaper than
+      a transformer of comparable scale, opening the door to \textbf{real-time and
+      edge} foundation models.
+    \end{column}
+    \begin{column}{0.44\columnwidth}
+      \centering
+      \includegraphics[width=\columnwidth]{figures/openhouse/FMplot_sm_accuracy.pdf}
+    \end{column}
+    \end{columns}
 
     \subhead{Contrastive learning}
     \placeholder{Content to be added.}
