@@ -234,7 +234,7 @@
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.68\columnwidth]{figures/openhouse/strategy.pdf}
+      \includegraphics[width=0.80\columnwidth]{figures/openhouse/strategy.pdf}
     \end{figure}
 
   \end{block}
@@ -253,17 +253,15 @@
     space \textbf{never before seen} at the LHC.
 
     \vspace{0.4cm}
-    \begin{columns}[c]
-    \begin{column}{0.42\columnwidth}
-      Our \textbf{VAE-GAN} is trained on events described by the four-vectors of
-      their constituent particles; the ones it reconstructs \emph{badly} are the
-      ones worth saving.
-    \end{column}
-    \begin{column}{0.54\columnwidth}
+    Our \textbf{VAE-GAN} is trained on events described by the four-vectors of their
+    constituent particles; the ones it reconstructs \emph{badly} are the ones worth
+    saving.
+
+    \vspace{0.4cm}
+    \begin{figure}
       \centering
-      \includegraphics[width=\columnwidth]{figures/openhouse/vae_gan.png}
-    \end{column}
-    \end{columns}
+      \includegraphics[width=0.68\columnwidth]{figures/openhouse/vae_gan.png}
+    \end{figure}
 
     \vspace{0.4cm}
     Fitting it inside the trigger's latency and resource budget takes
@@ -300,7 +298,7 @@
     % Opening sentence beside the logo, [c] so the two center against each other
     \begin{columns}[c]
     \begin{column}{0.62\columnwidth}
-      We built \textbf{NEXUS}, a \emph{lightweight} foundation model for collider
+      We built \textbf{NEXUS}, a lightweight foundation model for collider
       data: one network pre-trained on \textbf{20 million} LHC collisions, then
       reused across many different analyses instead of training a new model from
       scratch every time.
@@ -380,16 +378,11 @@
 
     \subhead{Distilling foundation models onto hardware}
 
-    We train a \textbf{foundation model} targeted at detector \textbf{waveforms},
-    then \textbf{compress and distill} it into a student network small enough to run
-    on an FPGA. The large model learns the general shape of detector signals once;
-    the distilled student carries that knowledge at a fraction of the cost.
-
-    \vspace{0.4cm}
-    The same recipe is being applied to large models targeting the wider
-    \textbf{HEP-ex} domain, in pursuit of \textbf{real-time foundation models} ---
-    state-of-the-art representations evaluated inside the latency budget of a trigger
-    or a front-end ASIC.
+    We train a \textbf{foundation model} on detector \textbf{waveforms}, then
+    \textbf{compress and distill} it into a student network small enough to run on an
+    FPGA at a fraction of the cost. Applying the same recipe to larger
+    \textbf{HEP-ex} models is a route to \textbf{real-time foundation models},
+    evaluated inside the latency budget of a trigger or a front-end ASIC.
 
     \subhead{Quantum machine learning}
     \placeholder{Content to be added.}
