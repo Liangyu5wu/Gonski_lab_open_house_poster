@@ -98,7 +98,7 @@
 \newcommand{\subhead}[1]{%
   \vspace*{0.7cm}%
   {\large\bfseries\color{cardinalred}#1}%
-  \par\vspace*{0.4cm}}
+  \par\vspace*{0.65cm}}
 
 % Shared height for the paired figures in the edge ML section
 \newcommand{\edgefigheight}{7.8cm}
@@ -192,11 +192,10 @@
 
     \begin{columns}[T]
     \begin{column}{0.74\columnwidth}
-      We focus on \textbf{well-motivated BSM extensions undercovered at the LHC}
-      --- not because they are unlikely, but because they are hard to analyze.
-      \textbf{Complex dark sectors} and \textbf{long-lived particles} are the prime
-      examples, and we meet those analysis challenges with novel ML: anomaly
-      detection, transformers, and foundation models.
+      We target \textbf{well-motivated BSM extensions undercovered at the LHC}:
+      not unlikely, just hard to analyze. \textbf{Complex dark sectors} and
+      \textbf{long-lived particles} are the prime examples, tackled with novel ML
+      such as anomaly detection, transformers, and foundation models.
     \end{column}
     \begin{column}{0.22\columnwidth}
       \centering
@@ -254,7 +253,7 @@
     space \textbf{never before seen} at the LHC.
 
     \vspace{0.4cm}
-    \begin{columns}[T]
+    \begin{columns}[c]
     \begin{column}{0.42\columnwidth}
       Our \textbf{VAE-GAN} is trained on events described by the four-vectors of
       their constituent particles; the ones it reconstructs \emph{badly} are the
@@ -267,21 +266,19 @@
     \end{columns}
 
     \vspace{0.4cm}
-    \begin{columns}[T]
-    \begin{column}{0.42\columnwidth}
-      Fitting it inside the trigger's latency and resource budget takes
-      \textbf{``fast ML''}: pruning low-weight nodes, quantization, and fewer loss
-      terms.
+    Fitting it inside the trigger's latency and resource budget takes
+    \textbf{``fast ML''}: pruning low-weight nodes, quantization, and fewer loss
+    terms.
 
-      \vspace{0.4cm}
-      \textbf{Status:} the first ATLAS anomaly trigger is collecting data, with Run 4
-      studies ongoing!
-    \end{column}
-    \begin{column}{0.54\columnwidth}
+    \vspace{0.4cm}
+    \textbf{Status:} the first ATLAS anomaly trigger is collecting data, with Run 4
+    studies ongoing!
+
+    \vspace{0.4cm}
+    \begin{figure}
       \centering
-      \includegraphics[width=\columnwidth]{figures/openhouse/anomaly_roc.png}
-    \end{column}
-    \end{columns}
+      \includegraphics[width=0.68\columnwidth]{figures/openhouse/anomaly_roc.png}
+    \end{figure}
 
   \end{block}
 
@@ -315,9 +312,9 @@
     \end{columns}
 
     \vspace{0.4cm}
-    What it learns from particle collisions even transfers beyond physics --- to
+    What it learns from particle collisions even transfers beyond physics:
     \textbf{gravitational waves}, \textbf{coastal flooding}, even \textbf{brain
-    activity} --- and it stays small enough to run in real time.
+    activity}. And it stays small enough to run in real time.
 
     \subhead{Contrastive learning}
     \placeholder{Content to be added.}
@@ -345,14 +342,14 @@
 
     \vspace{0.4cm}
     \begin{columns}[T]
-    \begin{column}{0.60\columnwidth}
+    \begin{column}{0.54\columnwidth}
       We are developing \textbf{embedded FPGA (eFPGA)} technology, capable of
       deploying reconfigurable logic blocks directly onto \textbf{ASICs}. This
       combines the benefits of an FPGA with the flexibility and processing power
       required for on-detector implementation --- so the algorithm can be updated
       long after the chip is built.
     \end{column}
-    \begin{column}{0.36\columnwidth}
+    \begin{column}{0.42\columnwidth}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/efpga_board.png}
     \end{column}
@@ -381,7 +378,7 @@
       \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
     \end{figure}
 
-    \subhead{Foundation models, distilled onto hardware}
+    \subhead{Distilling foundation models onto hardware}
 
     We train a \textbf{foundation model} targeted at detector \textbf{waveforms},
     then \textbf{compress and distill} it into a student network small enough to run
