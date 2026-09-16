@@ -191,15 +191,14 @@
   \begin{block}{Searching for New Physics}
 
     \begin{columns}[T]
-    \begin{column}{0.74\columnwidth}
+    \begin{column}{0.7\columnwidth}
       We target \textbf{well-motivated BSM extensions undercovered at the LHC}:
       not unlikely, just hard to analyze. \textbf{Complex dark sectors} and
-      \textbf{long-lived particles} are the prime examples, tackled with novel ML
-      such as anomaly detection, transformers, and foundation models.
+      \textbf{long-lived particles} are the prime examples.
     \end{column}
     \begin{column}{0.22\columnwidth}
       \centering
-      \includegraphics[width=0.9\columnwidth]{figures/openhouse/atlas_logo.png}
+      \includegraphics[width=0.6\columnwidth]{figures/openhouse/atlas_logo.png}
     \end{column}
     \end{columns}
 
@@ -249,7 +248,7 @@
     what can be stored to disk, making it the gatekeeper of all physics analyzed
     offline. Our group is \textbf{leading the effort} to bring real-time anomaly
     detection into that trigger: the first implementation entered data-taking in
-    2025, collecting events \emph{orthogonal to existing trigger collection} --- a phase
+    2025, collecting events \emph{orthogonal to existing trigger collection}, a phase
     space \textbf{never before seen} at the LHC.
 
     \vspace{0.4cm}
@@ -258,43 +257,21 @@
     saving.
 
     \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.68\columnwidth]{figures/openhouse/vae_gan.png}
-    \end{figure}
-
-    \vspace{0.4cm}
-    Fitting it inside the trigger's latency and resource budget takes
-    \textbf{``fast ML''}: pruning low-weight nodes, quantization, and fewer loss
-    terms.
-
-    \vspace{0.4cm}
-    \textbf{Status:} the first ATLAS anomaly trigger is collecting data, with Run 4
-    studies ongoing!
+    \textbf{First ATLAS anomaly trigger is collecting data, with Run 4
+    studies ongoing!}
 
     \vspace{0.4cm}
     \begin{figure}
       \centering
-      \includegraphics[width=0.68\columnwidth]{figures/openhouse/anomaly_roc.png}
+      \includegraphics[width=0.6\columnwidth]{figures/openhouse/2025_eventDisplay.pdf}
     \end{figure}
 
   \end{block}
 
-\end{column}
-
-\separatorcolumn
-
-\begin{column}{\colwidth}
 
   % ---------- 3. Large-scale ML ----------
   \begin{block}{Large-Scale ML for Particle Physics}
-
-    Modern ML lets us exploit the full statistical power of collider datasets, with
-    \textbf{transformers} and \textbf{foundation models} taking over from one-off,
-    single-purpose networks.
-
-    \subhead{Foundation models for HEP}
-
+    \vspace{1cm}
     % Opening sentence beside the logo, [c] so the two center against each other
     \begin{columns}[c]
     \begin{column}{0.62\columnwidth}
@@ -314,20 +291,41 @@
     \textbf{gravitational waves}, \textbf{coastal flooding}, even \textbf{brain
     activity}. And it stays small enough to run in real time.
 
-    \subhead{Contrastive learning}
-    \placeholder{Content to be added.}
+  \end{block}
+
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  % ---------- 4. Interpretable anomaly detection ----------
+  \begin{block}{Interpretable Anomaly Detection}
+    \textbf{ORCA} framework is a \textbf{particle transformer} trained with \textbf{supervised contrastive
+    learning} organizes events into an \textbf{embedding space} by Standard Model
+    process; an \textbf{autoencoder} on that embedding scores events that break the
+    organization.
+
+    \vspace{0.4cm}
+    \begin{figure}
+      \centering
+      \includegraphics[width=0.75\columnwidth]{figures/openhouse/orca_two_stage_overview.pdf}
+    \end{figure}
+
+    A \textbf{template likelihood fit in the embedding space} measures the \textbf{composition} of the selected events in
+    terms of known processes. 
 
   \end{block}
 
 
-  % ---------- 4. Edge ML ----------
+  % ---------- 5. Edge ML ----------
   \begin{block}{Edge ML \& Smart Detectors}
 
     At-source (\textbf{``edge''}) deployment of AI/ML can address the challenges of
-    future ultra-high data rate experiments --- but it demands novel solutions in
+    future ultra-high data rate experiments, but it demands novel solutions in
     microelectronics that deliver \textbf{reconfigurable digital logic} within
-    stringent latency and power constraints. Rather than shipping every raw sample
-    off the detector, a smart front-end sends only what matters.
+    stringent latency and power constraints.
 
     \vspace{0.4cm}
     \begin{figure}
@@ -341,13 +339,11 @@
     \vspace{0.4cm}
     \begin{columns}[T]
     \begin{column}{0.54\columnwidth}
-      We are developing \textbf{embedded FPGA (eFPGA)} technology, capable of
-      deploying reconfigurable logic blocks directly onto \textbf{ASICs}. This
+      We are developing \textbf{embedded FPGA (eFPGA)} technology, which
       combines the benefits of an FPGA with the flexibility and processing power
-      required for on-detector implementation --- so the algorithm can be updated
-      long after the chip is built.
+      required for on-detector implementation.
     \end{column}
-    \begin{column}{0.42\columnwidth}
+    \begin{column}{0.3\columnwidth}
       \centering
       \includegraphics[width=\columnwidth]{figures/openhouse/efpga_board.png}
     \end{column}
@@ -360,21 +356,16 @@
     and \textbf{dual-readout calorimeters} --- as well as beyond particle physics, in
     \textbf{photon science} and \textbf{quantum information science}.
 
-  \end{block}
+    % \vspace{0.4cm}
+    % Also with TID, we develop novel methods to implement machine learning on
+    % \textbf{FPGAs}, targeting \textbf{ultra-fast inference} and \textbf{low power}
+    % for applications like online data acquisition and processing.
 
-
-  % ---------- 5. Advancing ML on FPGAs ----------
-  \begin{block}{Advancing ML \& Quantum ML on FPGAs}
-
-    Also with TID, we develop novel methods to implement machine learning on
-    \textbf{FPGAs}, targeting \textbf{ultra-fast inference} and \textbf{low power}
-    for applications like online data acquisition and processing.
-
-    \vspace{0.4cm}
-    \begin{figure}
-      \centering
-      \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
-    \end{figure}
+    % \vspace{0.4cm}
+    % \begin{figure}
+    %   \centering
+    %   \includegraphics[width=\columnwidth]{figures/openhouse/mlpmixer_to_fpga.png}
+    % \end{figure}
 
     \subhead{Distilling foundation models onto hardware}
 
@@ -384,11 +375,13 @@
     \textbf{HEP-ex} models is a route to \textbf{real-time foundation models},
     evaluated inside the latency budget of a trigger or a front-end ASIC.
 
-    \subhead{Quantum machine learning}
-    \placeholder{Content to be added.}
-
   \end{block}
 
+
+  % ---------- 6. Quantum ML ----------
+  \begin{block}{Quantum Machine Learning}
+    \placeholder{Content to be added.}
+  \end{block}
 
 \end{column}
 
