@@ -198,7 +198,7 @@
     \end{column}
     \begin{column}{0.22\columnwidth}
       \centering
-      \includegraphics[width=0.6\columnwidth]{figures/openhouse/atlas_logo.png}
+      \includegraphics[width=0.75\columnwidth]{figures/openhouse/atlas_logo.png}
     \end{column}
     \end{columns}
 
@@ -270,15 +270,17 @@
 
 
   % ---------- 3. Large-scale ML ----------
-  \begin{block}{Large-Scale ML for Particle Physics}
+  \begin{block}{Foundation Models for Collider Physics}
     \vspace{1cm}
     % Opening sentence beside the logo, [c] so the two center against each other
     \begin{columns}[c]
     \begin{column}{0.62\columnwidth}
-      We built \textbf{NEXUS}, a lightweight foundation model for collider
-      data: one network pre-trained on \textbf{20 million} LHC collisions, then
-      reused across many different analyses instead of training a new model from
-      scratch every time.
+      We built \textbf{NEXUS}, a lightweight foundation model for collider data.
+      With \textbf{no labels required}, it learns what an ordinary collision looks
+      like from \textbf{20 million} LHC events, reading only the tracks that
+      particles leave behind. That single backbone is then reused across many
+      different analyses instead of training a new model from scratch every time,
+      and it gets further on \textbf{far fewer labeled examples}.
     \end{column}
     \begin{column}{0.34\columnwidth}
       \centering
@@ -287,9 +289,10 @@
     \end{columns}
 
     \vspace{0.4cm}
-    What it learns from particle collisions even transfers beyond physics:
-    \textbf{gravitational waves}, \textbf{coastal flooding}, even \textbf{brain
-    activity}. And it stays small enough to run in real time.
+    Most surprising of all, what it learns from particle collisions even transfers
+    beyond physics: \textbf{gravitational waves}, \textbf{coastal flooding}, even
+    \textbf{brain activity}. And at a fraction of the size of a transformer, it stays
+    small enough to run in real time.
 
   \end{block}
 
@@ -302,10 +305,10 @@
 
   % ---------- 4. Interpretable anomaly detection ----------
   \begin{block}{Interpretable Anomaly Detection}
-    \textbf{ORCA} framework is a \textbf{particle transformer} trained with \textbf{supervised contrastive
-    learning} organizes events into an \textbf{embedding space} by Standard Model
-    process; an \textbf{autoencoder} on that embedding scores events that break the
-    organization.
+    The \textbf{ORCA} framework is a \textbf{particle transformer} trained with
+    \textbf{supervised contrastive learning}, which organizes events into an
+    \textbf{embedding space} by Standard Model process; an \textbf{autoencoder} on
+    that embedding then scores events that break the organization.
 
     \vspace{0.4cm}
     \begin{figure}
