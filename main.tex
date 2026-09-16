@@ -100,8 +100,8 @@
   {\large\bfseries\color{cardinalred}#1}%
   \par\vspace*{0.65cm}}
 
-% Shared height for the paired figures in the edge ML section
-\newcommand{\edgefigheight}{7.8cm}
+% Shared height for figures that sit side by side in a row
+\newcommand{\figrowheight}{7.8cm}
 
 % Reserved space for a section that still needs content
 \newcommand{\placeholder}[1]{%
@@ -257,7 +257,7 @@
     saving.
 
     \vspace{0.4cm}
-    \textbf{First ATLAS anomaly trigger has collected data, with Run 4 studies ongoing!}
+    \textbf{The first ATLAS anomaly trigger has collected data, with Run 4 studies ongoing!}
 
     \vspace{0.4cm}
     \begin{figure}
@@ -333,9 +333,9 @@
     \begin{figure}
       \centering
       % Fixed height on both so they line up; the pair is ~36cm of the 37.8cm column
-      \includegraphics[height=\edgefigheight]{figures/openhouse/drift_cell_ml.png}%
+      \includegraphics[height=\figrowheight]{figures/openhouse/drift_cell_ml.png}%
       \hspace{1.5cm}%
-      \includegraphics[height=\edgefigheight]{figures/wf_BSO.png}
+      \includegraphics[height=\figrowheight]{figures/wf_BSO.png}
     \end{figure}
 
     \vspace{0.4cm}
@@ -354,8 +354,8 @@
     \vspace{0.4cm}
     In collaboration with engineers in SLAC's \textbf{Technology Innovation
     Directorate (TID)}, we explore eFPGA applications in advanced subsystems for
-    future experiments such as \textbf{FCC-ee} --- including \textbf{drift chambers}
-    and \textbf{dual-readout calorimeters} --- as well as beyond particle physics, in
+    future experiments such as \textbf{FCC-ee}, including \textbf{drift chambers}
+    and \textbf{dual-readout calorimeters}, and beyond particle physics in
     \textbf{photon science} and \textbf{quantum information science}.
 
     % \vspace{0.4cm}
@@ -386,14 +386,14 @@
     \begin{figure}
       \centering
       % \hspace{1.5cm}%
-      \includegraphics[height=\edgefigheight]{figures/openhouse/arch_qae_pqc.png}
+      \includegraphics[height=\figrowheight]{figures/openhouse/arch_qae_pqc.png}
     \end{figure}
     Quantum algorithms with just \textbf{tens of trainable parameters} can be accelerated on FPGAs within collider trigger constraints while outperforming neural networks on anomaly detection.
 
     While quantum computers mature, \textbf{quantum-inspired algorithms}, such as \textbf{tensor networks}, offer a classical pathway to exploit the entangled structure of collider data to enhance ML performance.
     \input{figures/fig_smpo}
     \vspace{-1.5cm}
-    Tensor networks can be run in tens of nanoseconds on FPGAs and exploit short- and long-range \textbf{entanglement structure of the underlying physics} to yield excellent signal-to-background separation.
+    Tensor networks can be run in tens of nanoseconds on FPGAs and exploit the \textbf{short- and long-range entanglement structure} of the underlying physics to yield excellent signal-to-background separation.
   \end{block}
 
 \end{column}
